@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane style="-fx-background-color: #f5f7fa;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.task.task_app.view.GestionTareasViewController">
+<BorderPane style="-fx-background-color: #f5f7fa;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.task.task_app.view.GestionMateriasViewController">
 
     <!-- Contenido principal -->
     <center>

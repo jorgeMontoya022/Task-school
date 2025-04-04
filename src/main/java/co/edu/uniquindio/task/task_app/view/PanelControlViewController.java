@@ -37,18 +37,29 @@ public class PanelControlViewController {
     private Text textNombre;
 
     @FXML
-    void on(ActionEvent event) {
-
-    }
-
-    @FXML
     void onAgregarTarea(ActionEvent event) {
 
     }
 
     @FXML
-    void initialize() {
+    void onMisTareas(ActionEvent event) {
 
+    }
+
+    @FXML
+    void ontareasPendientes(ActionEvent event) {
+
+    }
+
+    @FXML
+    void initialize() {
+        assert btnAgregarTarea != null : "fx:id=\"btnAgregarTarea\" was not injected: check your FXML file 'panel-control-view.fxml'.";
+        assert btnMisTareas != null : "fx:id=\"btnMisTareas\" was not injected: check your FXML file 'panel-control-view.fxml'.";
+        assert btnPanelPrincipal != null : "fx:id=\"btnPanelPrincipal\" was not injected: check your FXML file 'panel-control-view.fxml'.";
+        assert btnTareasPendiente != null : "fx:id=\"btnTareasPendiente\" was not injected: check your FXML file 'panel-control-view.fxml'.";
+        assert label != null : "fx:id=\"label\" was not injected: check your FXML file 'panel-control-view.fxml'.";
+        assert textCarrera != null : "fx:id=\"textCarrera\" was not injected: check your FXML file 'panel-control-view.fxml'.";
+        assert textNombre != null : "fx:id=\"textNombre\" was not injected: check your FXML file 'panel-control-view.fxml'.";
 
     }
 
