@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600" prefWidth="800" style="-fx-background-color: #f5f7fa;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.task.task_app.view.InicioSesionViewController">
+    <children>
+        <!-- Usamos StackPane para centrar el contenido siempre -->
+        <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <!-- BorderPane permite mantener el contenido centrado pero con proporciones máximas -->
+                <BorderPane maxHeight="500" maxWidth="500" minHeight="300" minWidth="300">
+                    <center>
+                        <!-- Contenedor principal con VBox para organización vertical -->
+                        <VBox alignment="TOP_CENTER" spacing="10" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-width: 1; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20;">
+                            <children>
+                                <!-- Logo y título -->
+                                <StackPane>
+                                    <Circle fill="#4a6cf7" radius="40" />
+                                    <Label text="TS" textFill="WHITE">
+                                        <font>
+                                            <Font name="System Bold" size="24" />
+                                        </font>
+                                    </Label>
+                                </StackPane>
+
+                                <Label text="TaskScholar" textFill="#2d3748">
+                                    <font>
+                                        <Font name="System Bold" size="24" />
+                                    </font>
+                                </Label>
+
+                                <!-- Espacio -->
+                                <VBox prefHeight="20" />
+
+                                <!-- Formulario -->
+                                <TextField fx:id="emailField" maxWidth="400" prefHeight="40" promptText="Correo electrónico" style="-fx-background-color: #f8fafc; -fx-border-color: #e0e6ed; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5;">
+                                    <font>
+                                        <Font size="14" />
+                                    </font>
+                                </TextField>
+
+                                <PasswordField fx:id="passwordField" maxWidth="400" prefHeight="40" promptText="Contraseña" style="-fx-background-color: #f8fafc; -fx-border-color: #e0e6ed; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5;">
+                                    <font>
+                                        <Font size="14" />
+                                    </font>
+                                </PasswordField>
+
+                                <!-- Botón de inicio de sesión -->
+                                <Button fx:id="loginButton" maxWidth="400" onAction="#handleLogin" prefHeight="40" style="-fx-background-color: #4a6cf7; -fx-background-radius: 5;" text="Iniciar Sesión" textFill="WHITE">
+                                    <font>
+                                        <Font name="System Bold" size="14" />
+                                    </font>
+                                </Button>
+
+                                <!-- Enlace para registro -->
+                                <Hyperlink fx:id="registerLink" onAction="#handleRegister" text="¿No tienes cuenta? Regístrate" textFill="#4a6cf7">
+                                    <font>
+                                        <Font size="14" />
+                                    </font>
+                                </Hyperlink>
+                            </children>
+                        </VBox>
+                    </center>
+                </BorderPane>
+            </children>
+        </StackPane>
+    </children>
+</AnchorPane>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane style="-fx-background-color: #f5f7fa;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.task.task_app.view.GestionTareasViewController">
+
+    <!-- Contenido principal -->
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background: #f5f7fa; -fx-background-color: transparent; -fx-padding: 0;">
+            <VBox spacing="20">
+                <padding>
+                    <Insets bottom="30" left="30" right="30" top="30" />
+                </padding>
+
+                <!-- Encabezado y botón agregar -->
+                <HBox alignment="CENTER_LEFT" spacing="20">
+                    <Text style="-fx-font-size: 22px; -fx-fill: #2d3748;" text="Mis Materias" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button style="-fx-background-color: #4a6cf7; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-padding: 10 20;" text="+ Nueva Materia" />
+                </HBox>
+
+                <!-- Tarjetas de materias (organizadas en filas) -->
+                <FlowPane hgap="20" vgap="20">
+                    <!-- Tarjeta: Literatura -->
+                    <VBox prefHeight="150" prefWidth="280" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 10; -fx-background-radius: 10;">
+                        <StackPane maxWidth="Infinity" minHeight="20" style="-fx-background-color: #fc8181; -fx-background-radius: 10 10 0 0;" />
+                        <VBox spacing="5" style="-fx-padding: 15;">
+                            <Text style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="Literatura" />
+                            <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Dr. Carlos Mendoza" />
+                            <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Lunes y Miércoles - 10:00-12:00" />
+                            <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Tareas: 3 pendientes" />
+                        </VBox>
+                    </VBox>
+
+                    <!-- Tarjeta: Matemáticas -->
+                    <VBox prefHeight="150" prefWidth="280" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 10; -fx-background-radius: 10;">
+                        <StackPane maxWidth="Infinity" minHeight="20" style="-fx-background-color: #fbd38d; -fx-background-radius: 10 10 0 0;" />
+                        <VBox spacing="5" style="-fx-padding: 15;">
+                            <Text style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="Matemáticas" />
+                            <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Dra. Laura Sánchez" />
+                            <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Martes y Jueves - 8:00-10:00" />
+                            <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Tareas: 2 pendientes" />
+                        </VBox>
+                    </VBox>
+
+                    <!-- Tarjeta: Física (completando la implementación) -->
+                    <VBox prefHeight="150" prefWidth="280" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 10; -fx-background-radius: 10;">
+                        <StackPane maxWidth="Infinity" minHeight="20" style="-fx-background-color: #bee3f8; -fx-background-radius: 10 10 0 0;" />
+                        <VBox spacing="5" style="-fx-padding: 15;">
+                            <Text style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="Física" />
+                            <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Dr. Roberto Álvarez" />
+                            <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Lunes y Viernes - 12:00-14:00" />
+                            <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Tareas: 1 pendiente" />
+                        </VBox>
+                    </VBox>
+
+                    <!-- Tarjeta: Historia -->
+                    <VBox prefHeight="150" prefWidth="280" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 10; -fx-background-radius: 10;">
+                        <StackPane maxWidth="Infinity" minHeight="20" style="-fx-background-color: #c6f6d5; -fx-background-radius: 10 10 0 0;" />
+                        <VBox spacing="5" style="-fx-padding: 15;">
+                            <Text style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="Historia" />
+                            <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Dra. Martha López" />
+                            <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Miércoles - 15:00-18:00" />
+                            <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Tareas: 1 pendiente" />
+                        </VBox>
+                    </VBox>
+
+                    <!-- Tarjeta: Programación -->
+                    <VBox prefHeight="150" prefWidth="280" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 10; -fx-background-radius: 10;">
+                        <StackPane maxWidth="Infinity" minHeight="20" style="-fx-background-color: #fed7e2; -fx-background-radius: 10 10 0 0;" />
+                        <VBox spacing="5" style="-fx-padding: 15;">
+                            <Text style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="Programación" />
+                            <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Ing. Jorge Ramírez" />
+                            <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Martes y Jueves - 14:00-16:00" />
+                            <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Tareas: 2 pendientes" />
+                        </VBox>
+                    </VBox>
+
+                    <!-- Tarjeta: Inglés -->
+                    <VBox prefHeight="150" prefWidth="280" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 10; -fx-background-radius: 10;">
+                        <StackPane maxWidth="Infinity" minHeight="20" style="-fx-background-color: #b2f5ea; -fx-background-radius: 10 10 0 0;" />
+                        <VBox spacing="5" style="-fx-padding: 15;">
+                            <Text style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="Inglés" />
+                            <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Lic. Sarah Johnson" />
+                            <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Viernes - 8:00-11:00" />
+                            <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Tareas: 0 pendientes" />
+                        </VBox>
+                    </VBox>
+                </FlowPane>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

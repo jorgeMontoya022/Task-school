@@ -5,4 +5,7 @@ module co.edu.uniquindio.task.task_app {
 
     opens co.edu.uniquindio.task.task_app to javafx.fxml;
     exports co.edu.uniquindio.task.task_app;
+
+    opens co.edu.uniquindio.task.task_app.view;
+    exports co.edu.uniquindio.task.task_app.view;
 }
