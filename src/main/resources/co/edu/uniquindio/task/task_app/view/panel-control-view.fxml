@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Text?>
 
 <BorderPane style="-fx-background-color: #f5f7fa;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.task.task_app.view.PanelControlViewController">
 
-    <!-- Barra lateral -->
+    <!-- Barra lateral (mantiene igual) -->
     <left>
         <VBox prefWidth="250" spacing="10" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-width: 0 1 0 0;">
             <padding>
@@ -35,7 +34,7 @@
 
             <VBox spacing="10" style="-fx-padding: 30 0 0 0;" VBox.vgrow="NEVER">
                 <!-- Menú lateral -->
-                <Button fx:id="btnPanelPrincipal" maxWidth="Infinity" minHeight="45" style="-fx-background-color: #edf2f7; -fx-text-fill: #2d3748; -fx-alignment: center-left; -fx-padding: 0 0 0 35; -fx-background-radius: 5;" text="Panel Principal" />
+                <Button fx:id="btnPanelPrincipal" maxWidth="Infinity" minHeight="45" onAction="#onPanelPrincipal" style="-fx-background-color: #edf2f7; -fx-text-fill: #2d3748; -fx-alignment: center-left; -fx-padding: 0 0 0 35; -fx-background-radius: 5;" text="Panel Principal" />
                 <Button fx:id="btnMisTareas" maxWidth="Infinity" minHeight="45" onAction="#onMisTareas" style="-fx-background-color: white; -fx-text-fill: #718096; -fx-alignment: center-left; -fx-padding: 0 0 0 35; -fx-background-radius: 5;" text="Mis Materias" />
                 <Button fx:id="btnTareasPendiente" maxWidth="Infinity" minHeight="45" onAction="#ontareasPendientes" style="-fx-background-color: white; -fx-text-fill: #718096; -fx-alignment: center-left; -fx-padding: 0 0 0 35; -fx-background-radius: 5;" text="Tareas Pendientes" />
             </VBox>
@@ -53,237 +52,79 @@
         </VBox>
     </left>
 
-    <!-- Contenido principal -->
+    <!-- Contenido principal - REEMPLAZADO CON STACKPANE -->
     <center>
-        <ScrollPane fitToWidth="true" style="-fx-background: #f5f7fa; -fx-background-color: transparent; -fx-padding: 0;">
-            <VBox spacing="20">
-                <padding>
-                    <Insets bottom="30" left="30" right="30" top="30" />
-                </padding>
+        <StackPane>
+            <children>
+                <!-- Vista del panel principal -->
+                <ScrollPane fx:id="panelPrincipalView" fitToWidth="true" style="-fx-background: #f5f7fa; -fx-background-color: transparent; -fx-padding: 0;">
+                    <VBox spacing="20">
+                        <padding>
+                            <Insets bottom="30" left="30" right="30" top="30" />
+                        </padding>
 
-                <!-- Encabezado y búsqueda -->
-                <HBox alignment="CENTER_LEFT" spacing="20">
-                    <Text fx:id="label" style="-fx-font-size: 18px; -fx-fill: #2d3748;" text="Bienvenido de vuelta, Ana" />
-                    <Region HBox.hgrow="ALWAYS" />
+                        <!-- Encabezado y búsqueda -->
+                        <HBox alignment="CENTER_LEFT" spacing="20">
+                            <Text fx:id="label" style="-fx-font-size: 18px; -fx-fill: #2d3748;" text="Bienvenido de vuelta, Ana" />
+                            <Region HBox.hgrow="ALWAYS" />
 
-                    <TextField prefWidth="250" promptText="Buscar tareas..." style="-fx-background-color: #f8fafc; -fx-border-color: #e0e6ed; -fx-border-radius: 20; -fx-background-radius: 20; -fx-padding: 10;" />
+                            <TextField prefWidth="250" promptText="Buscar tareas..." style="-fx-background-color: #f8fafc; -fx-border-color: #e0e6ed; -fx-border-radius: 20; -fx-background-radius: 20; -fx-padding: 10;" />
 
-                    <Button fx:id="btnAgregarTarea" onAction="#onAgregarTarea" style="-fx-background-color: #4a6cf7; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-padding: 10 20;" text="+ Nueva Tarea" />
-                </HBox>
+                            <Button fx:id="btnAgregarTarea" onAction="#onAgregarTarea" style="-fx-background-color: #4a6cf7; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-padding: 10 20;" text="+ Nueva Tarea" />
+                        </HBox>
 
-                <!-- Tarjetas de resumen -->
-                <HBox spacing="20">
-                    <HBox.margin>
-                        <Insets bottom="10" top="10" />
-                    </HBox.margin>
+                        <!-- Tarjetas de resumen -->
+                        <HBox spacing="20">
+                            <HBox.margin>
+                                <Insets bottom="10" top="10" />
+                            </HBox.margin>
 
-                    <VBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20;" HBox.hgrow="ALWAYS">
-                        <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Tareas Pendientes" />
-                        <Text style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="12" />
+                            <VBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20;" HBox.hgrow="ALWAYS">
+                                <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Tareas Pendientes" />
+                                <Text style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="12" />
+                            </VBox>
+
+                            <VBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20;" HBox.hgrow="ALWAYS">
+                                <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Tareas Completadas" />
+                                <Text style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="24" />
+                            </VBox>
+
+                            <VBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20;" HBox.hgrow="ALWAYS">
+                                <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Vencimiento Próximo" />
+                                <Text style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-fill: #f56565;" text="3" />
+                            </VBox>
+                        </HBox>
+
+                        <!-- Lista de Tareas con TableView -->
+                        <VBox style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20;">
+                            <Text style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="Tareas Prioritarias">
+                                <VBox.margin>
+                                    <Insets bottom="20" />
+                                </VBox.margin>
+                            </Text>
+
+                            <!-- TableView modernizado -->
+                            <TableView fx:id="tablaTareas" styleClass="modern-table">
+                                <columns>
+                                    <TableColumn fx:id="colTarea" prefWidth="300" text="Tarea" />
+                                    <TableColumn fx:id="colMateria" prefWidth="100" text="Materia" />
+                                    <TableColumn fx:id="colFecha" prefWidth="130" text="Fecha límite" />
+                                    <TableColumn fx:id="colEstado" prefWidth="130" text="Estado" />
+                                </columns>
+                            </TableView>
+                        </VBox>
                     </VBox>
-
-                    <VBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20;" HBox.hgrow="ALWAYS">
-                        <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Tareas Completadas" />
-                        <Text style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="24" />
-                    </VBox>
-
-                    <VBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20;" HBox.hgrow="ALWAYS">
-                        <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Vencimiento Próximo" />
-                        <Text style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-fill: #f56565;" text="3" />
-                    </VBox>
-                </HBox>
-
-                <!-- Lista de Tareas -->
-                <VBox style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20;">
-                    <Text style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="Tareas Prioritarias">
-                        <VBox.margin>
-                            <Insets bottom="20" />
-                        </VBox.margin>
-                    </Text>
-
-                    <!-- Encabezados de columna -->
-                    <GridPane hgap="20" vgap="10">
-                        <columnConstraints>
-                            <ColumnConstraints percentWidth="45" />
-                            <ColumnConstraints percentWidth="15" />
-                            <ColumnConstraints percentWidth="20" />
-                            <ColumnConstraints percentWidth="20" />
-                        </columnConstraints>
-
-                        <Text style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-fill: #718096;" text="Tarea" GridPane.columnIndex="0" />
-                        <Text style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-fill: #718096;" text="Materia" GridPane.columnIndex="1" />
-                        <Text style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-fill: #718096;" text="Fecha límite" GridPane.columnIndex="2" />
-                        <Text style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-fill: #718096;" text="Estado" GridPane.columnIndex="3" />
-
-                        <!-- Tarea 1 -->
-                        <HBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 5; -fx-padding: 15;" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="1">
-                            <GridPane hgap="20">
-                                <columnConstraints>
-                                    <ColumnConstraints percentWidth="45" />
-                                    <ColumnConstraints percentWidth="15" />
-                                    <ColumnConstraints percentWidth="20" />
-                                    <ColumnConstraints percentWidth="20" />
-                                </columnConstraints>
-
-                                <HBox alignment="CENTER_LEFT" spacing="10" GridPane.columnIndex="0">
-                                    <StackPane>
-                                        <Circle fill="#f56565" opacity="0.2" radius="15" />
-                                        <Circle fill="#f56565" radius="7" />
-                                    </StackPane>
-                                    <VBox>
-                                        <Text style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="Ensayo Final Literatura" />
-                                        <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="3000 palabras, formato APA" />
-                                    </VBox>
-                                </HBox>
-
-                                <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1">
-                                    <StackPane style="-fx-background-color: #feb2b2; -fx-background-radius: 10; -fx-opacity: 0.3; -fx-padding: 5 15;">
-                                        <Text style="-fx-font-size: 14px; -fx-fill: #c53030;" text="Literatura" />
-                                    </StackPane>
-                                </HBox>
-
-                                <Text style="-fx-font-size: 14px; -fx-fill: #f56565;" text="Hoy, 23:59" GridPane.columnIndex="2" />
-
-                                <HBox alignment="CENTER_LEFT" GridPane.columnIndex="3">
-                                    <StackPane style="-fx-background-color: #fc8181; -fx-background-radius: 12; -fx-opacity: 0.2; -fx-padding: 5 15;">
-                                        <Text style="-fx-font-size: 14px; -fx-fill: #e53e3e;" text="Pendiente" />
-                                    </StackPane>
-                                </HBox>
-                        <rowConstraints>
-                           <RowConstraints />
-                        </rowConstraints>
-                            </GridPane>
-                        </HBox>
-
-                        <!-- Tarea 2 -->
-                        <HBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 5; -fx-padding: 15;" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="2">
-                            <GridPane hgap="20">
-                                <columnConstraints>
-                                    <ColumnConstraints percentWidth="45" />
-                                    <ColumnConstraints percentWidth="15" />
-                                    <ColumnConstraints percentWidth="20" />
-                                    <ColumnConstraints percentWidth="20" />
-                                </columnConstraints>
-
-                                <HBox alignment="CENTER_LEFT" spacing="10" GridPane.columnIndex="0">
-                                    <StackPane>
-                                        <Circle fill="#ed8936" opacity="0.2" radius="15" />
-                                        <Circle fill="#ed8936" radius="7" />
-                                    </StackPane>
-                                    <VBox>
-                                        <Text style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="Proyecto Matemáticas" />
-                                        <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Ecuaciones diferenciales Cap. 5-7" />
-                                    </VBox>
-                                </HBox>
-
-                                <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1">
-                                    <StackPane style="-fx-background-color: #fbd38d; -fx-background-radius: 10; -fx-opacity: 0.3; -fx-padding: 5 15;">
-                                        <Text style="-fx-font-size: 14px; -fx-fill: #c05621;" text="Matemáticas" />
-                                    </StackPane>
-                                </HBox>
-
-                                <Text style="-fx-font-size: 14px; -fx-fill: #ed8936;" text="Mañana, 16:00" GridPane.columnIndex="2" />
-
-                                <HBox alignment="CENTER_LEFT" GridPane.columnIndex="3">
-                                    <StackPane style="-fx-background-color: #f6ad55; -fx-background-radius: 12; -fx-opacity: 0.2; -fx-padding: 5 15;">
-                                        <Text style="-fx-font-size: 14px; -fx-fill: #dd6b20;" text="En Proceso" />
-                                    </StackPane>
-                                </HBox>
-                        <rowConstraints>
-                           <RowConstraints />
-                        </rowConstraints>
-                            </GridPane>
-                        </HBox>
-
-                        <!-- Tarea 3 -->
-                        <HBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 5; -fx-padding: 15;" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="3">
-                            <GridPane hgap="20">
-                                <columnConstraints>
-                                    <ColumnConstraints percentWidth="45" />
-                                    <ColumnConstraints percentWidth="15" />
-                                    <ColumnConstraints percentWidth="20" />
-                                    <ColumnConstraints percentWidth="20" />
-                                </columnConstraints>
-
-                                <HBox alignment="CENTER_LEFT" spacing="10" GridPane.columnIndex="0">
-                                    <StackPane>
-                                        <Circle fill="#3182ce" opacity="0.2" radius="15" />
-                                        <Circle fill="#3182ce" radius="7" />
-                                    </StackPane>
-                                    <VBox>
-                                        <Text style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="Laboratorio Física" />
-                                        <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Informe de experimento péndulo" />
-                                    </VBox>
-                                </HBox>
-
-                                <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1">
-                                    <StackPane style="-fx-background-color: #bee3f8; -fx-background-radius: 10; -fx-opacity: 0.3; -fx-padding: 5 15;">
-                                        <Text style="-fx-font-size: 14px; -fx-fill: #2b6cb0;" text="Física" />
-                                    </StackPane>
-                                </HBox>
-
-                                <Text style="-fx-font-size: 14px; -fx-fill: #3182ce;" text="En 3 días" GridPane.columnIndex="2" />
-
-                                <HBox alignment="CENTER_LEFT" GridPane.columnIndex="3">
-                                    <StackPane style="-fx-background-color: #63b3ed; -fx-background-radius: 12; -fx-opacity: 0.2; -fx-padding: 5 15;">
-                                        <Text style="-fx-font-size: 14px; -fx-fill: #3182ce;" text="En Proceso" />
-                                    </StackPane>
-                                </HBox>
-                        <rowConstraints>
-                           <RowConstraints />
-                        </rowConstraints>
-                            </GridPane>
-                        </HBox>
-
-                        <!-- Tarea 4 -->
-                        <HBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 5; -fx-padding: 15;" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="4">
-                            <GridPane hgap="20">
-                                <columnConstraints>
-                                    <ColumnConstraints percentWidth="45" />
-                                    <ColumnConstraints percentWidth="15" />
-                                    <ColumnConstraints percentWidth="20" />
-                                    <ColumnConstraints percentWidth="20" />
-                                </columnConstraints>
-
-                                <HBox alignment="CENTER_LEFT" spacing="10" GridPane.columnIndex="0">
-                                    <StackPane>
-                                        <Circle fill="#48bb78" opacity="0.2" radius="15" />
-                                        <Circle fill="#48bb78" radius="7" />
-                                    </StackPane>
-                                    <VBox>
-                                        <Text style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="Presentación Historia" />
-                                        <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Revolución industrial, 10 min." />
-                                    </VBox>
-                                </HBox>
-
-                                <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1">
-                                    <StackPane style="-fx-background-color: #c6f6d5; -fx-background-radius: 10; -fx-opacity: 0.3; -fx-padding: 5 15;">
-                                        <Text style="-fx-font-size: 14px; -fx-fill: #2f855a;" text="Historia" />
-                                    </StackPane>
-                                </HBox>
-
-                                <Text style="-fx-font-size: 14px; -fx-fill: #48bb78;" text="En 5 días" GridPane.columnIndex="2" />
-
-                                <HBox alignment="CENTER_LEFT" GridPane.columnIndex="3">
-                                    <StackPane style="-fx-background-color: #9ae6b4; -fx-background-radius: 12; -fx-opacity: 0.2; -fx-padding: 5 15;">
-                                        <Text style="-fx-font-size: 14px; -fx-fill: #38a169;" text="No iniciada" />
-                                    </StackPane>
-                                </HBox>
-                        <rowConstraints>
-                           <RowConstraints />
-                        </rowConstraints>
-                            </GridPane>
-                        </HBox>
-                  <rowConstraints>
-                     <RowConstraints />
-                     <RowConstraints />
-                     <RowConstraints />
-                     <RowConstraints />
-                     <RowConstraints />
-                  </rowConstraints>
-                    </GridPane>
-                </VBox>
-            </VBox>
-        </ScrollPane>
+                </ScrollPane>
+                
+                <!-- Vista de materias (inicialmente invisible) -->
+                <AnchorPane fx:id="materiasView" visible="false">
+                    <children>
+                        <fx:include source="gestion-materias-view.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </children>
+                </AnchorPane>
+                
+                <!-- Vista de tareas pendientes (inicialmente invisible) -->
+            </children>
+        </StackPane>
     </center>
 </BorderPane>

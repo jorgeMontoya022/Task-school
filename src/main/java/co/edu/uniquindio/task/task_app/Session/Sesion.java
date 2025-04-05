@@ -17,6 +17,10 @@ public class Sesion {
         return INSTANCE;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
@@ -24,7 +28,5 @@ public class Sesion {
     public void closeSesion() {
         this.usuario = null;
     }
-
-
     
 }

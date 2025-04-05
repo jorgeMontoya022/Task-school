@@ -2,12 +2,21 @@ package co.edu.uniquindio.task.task_app.view;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import co.edu.uniquindio.task.task_app.Session.Sesion;
+import co.edu.uniquindio.task.task_app.model.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-public class PanelControlViewController {
+public class PanelControlViewController extends CoreViewController{
+
+    Usuario usuario;
 
     @FXML
     private ResourceBundle resources;
@@ -28,7 +37,28 @@ public class PanelControlViewController {
     private Button btnTareasPendiente;
 
     @FXML
+    private TableColumn<?, ?> colEstado;
+
+    @FXML
+    private TableColumn<?, ?> colFecha;
+
+    @FXML
+    private TableColumn<?, ?> colMateria;
+
+    @FXML
+    private TableColumn<?, ?> colTarea;
+
+    @FXML
     private Text label;
+
+    @FXML
+    private AnchorPane materiasView;
+
+    @FXML
+    private ScrollPane panelPrincipalView;
+
+    @FXML
+    private TableView<?> tablaTareas;
 
     @FXML
     private Text textCarrera;
@@ -42,8 +72,37 @@ public class PanelControlViewController {
     }
 
     @FXML
-    void onMisTareas(ActionEvent event) {
+    public void onPanelPrincipal(ActionEvent event) {
+        // Mostrar panel principal, ocultar el resto
+        panelPrincipalView.setVisible(true);
+        materiasView.setVisible(false);
 
+        
+        // Cambiar estilos de los botones
+        actualizarEstilosBotones(btnPanelPrincipal);
+    }
+    
+    @FXML
+    public void onMisTareas(ActionEvent event) {
+        // Mostrar vista de materias, ocultar el resto
+        panelPrincipalView.setVisible(false);
+        materiasView.setVisible(true);
+    
+        
+        // Cambiar estilos de los botones
+        actualizarEstilosBotones(btnMisTareas);
+    }
+
+    private void actualizarEstilosBotones(Button botonActivo) {
+        // Restaurar el estilo por defecto para todos los botones
+        String estiloInactivo = "-fx-background-color: white; -fx-text-fill: #718096; -fx-alignment: center-left; -fx-padding: 0 0 0 35; -fx-background-radius: 5;";
+        btnPanelPrincipal.setStyle(estiloInactivo);
+        btnMisTareas.setStyle(estiloInactivo);
+        btnTareasPendiente.setStyle(estiloInactivo);
+        
+        // Aplicar estilo activo al botón seleccionado
+        String estiloActivo = "-fx-background-color: #edf2f7; -fx-text-fill: #2d3748; -fx-alignment: center-left; -fx-padding: 0 0 0 35; -fx-background-radius: 5;";
+        botonActivo.setStyle(estiloActivo);
     }
 
     @FXML
@@ -53,14 +112,20 @@ public class PanelControlViewController {
 
     @FXML
     void initialize() {
-        assert btnAgregarTarea != null : "fx:id=\"btnAgregarTarea\" was not injected: check your FXML file 'panel-control-view.fxml'.";
-        assert btnMisTareas != null : "fx:id=\"btnMisTareas\" was not injected: check your FXML file 'panel-control-view.fxml'.";
-        assert btnPanelPrincipal != null : "fx:id=\"btnPanelPrincipal\" was not injected: check your FXML file 'panel-control-view.fxml'.";
-        assert btnTareasPendiente != null : "fx:id=\"btnTareasPendiente\" was not injected: check your FXML file 'panel-control-view.fxml'.";
-        assert label != null : "fx:id=\"label\" was not injected: check your FXML file 'panel-control-view.fxml'.";
-        assert textCarrera != null : "fx:id=\"textCarrera\" was not injected: check your FXML file 'panel-control-view.fxml'.";
-        assert textNombre != null : "fx:id=\"textNombre\" was not injected: check your FXML file 'panel-control-view.fxml'.";
+       usuario = (Usuario) Sesion.getInstance().getUsuario();
+       System.out.println("Usuario en PanelControl: " + usuario);
+       initView();
 
+    }
+
+    private void initView() {
+        mostrarInformacion();
+    }
+
+    private void mostrarInformacion() {
+        textCarrera.setText(usuario.getCarrera());
+        textNombre.setText(usuario.getNombreCompleto());
+    
     }
 
 }

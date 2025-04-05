@@ -80,4 +80,13 @@ public class Usuario {
     public void setListaMaterias(List<Materia> listaMaterias) {
         this.listaMaterias = listaMaterias;
     }
+
+
+    @Override
+    public String toString() {
+        return "Usuario [nombreCompleto=" + nombreCompleto + ", institucion=" + institucion + ", carrera=" + carrera
+                + "]";
+    }
+
+    
 }

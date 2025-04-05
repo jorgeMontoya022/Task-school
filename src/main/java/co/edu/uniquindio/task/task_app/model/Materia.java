@@ -2,22 +2,24 @@ package co.edu.uniquindio.task.task_app.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Comparator;
+
+import co.edu.uniquindio.task.task_app.priorityQueue.ColaPrioridad;
 
 public class Materia {
     private String nombreMateria;
     private String profesor;
     private String horario;
     private int tareasPendientes;
-    private String colorHex; // Color para la barra superior
-
-
-
-    public Materia(String nombreMateria, String profesor, String horario, int tareasPendientes, String colorHex) {
+    private ColaPrioridad<Tarea> colaTareas;
+   
+    public Materia(String nombreMateria, String profesor, String horario, int tareasPendientes) {
         this.nombreMateria = nombreMateria;
         this.profesor = profesor;
         this.horario = horario;
         this.tareasPendientes = tareasPendientes;
-        this.colorHex = colorHex;
+        this.colaTareas = new ColaPrioridad<>(Comparator.comparing(Tarea:: getFechaEntrega));
+       
     }
 
     public String getNombreMateria() {
@@ -52,14 +54,6 @@ public class Materia {
         this.tareasPendientes = tareasPendientes;
     }
 
-    public String getColorHex() {
-        return colorHex;
-    }
-
-    public void setColorHex(String colorHex) {
-        this.colorHex = colorHex;
-    }
-    
-    // Getters y setters
+  
    
 }
