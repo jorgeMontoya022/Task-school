@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Text?>
 
@@ -65,7 +66,7 @@
 
                         <!-- Encabezado y búsqueda -->
                         <HBox alignment="CENTER_LEFT" spacing="20">
-                            <Text fx:id="label" style="-fx-font-size: 18px; -fx-fill: #2d3748;" text="Bienvenido de vuelta, Ana" />
+                            <Text fx:id="labeBienvenida" style="-fx-font-size: 18px; -fx-fill: #2d3748;" text="Bienvenido de vuelta, Ana" />
                             <Region HBox.hgrow="ALWAYS" />
 
                             <TextField prefWidth="250" promptText="Buscar tareas..." style="-fx-background-color: #f8fafc; -fx-border-color: #e0e6ed; -fx-border-radius: 20; -fx-background-radius: 20; -fx-padding: 10;" />

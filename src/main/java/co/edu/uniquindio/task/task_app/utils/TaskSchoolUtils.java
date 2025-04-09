@@ -45,7 +45,7 @@ public class TaskSchoolUtils {
             "jorgetoro708@gmail.com", 
             "trululu", 
             "Universidad del quindío", 
-            "Ing.Sistemas");
+            "Ing.Civil");
 
             ArrayList<Usuario> listaUsuarios = new ArrayList<>();
             listaUsuarios.add(usuario1);

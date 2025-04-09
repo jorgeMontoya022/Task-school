@@ -49,7 +49,7 @@ public class PanelControlViewController extends CoreViewController{
     private TableColumn<?, ?> colTarea;
 
     @FXML
-    private Text label;
+    private Text labeBienvenida;
 
     @FXML
     private AnchorPane materiasView;
@@ -125,6 +125,7 @@ public class PanelControlViewController extends CoreViewController{
     private void mostrarInformacion() {
         textCarrera.setText(usuario.getCarrera());
         textNombre.setText(usuario.getNombreCompleto());
+        labeBienvenida.setText("Bienvenido de vuelta, " +usuario.getNombreCompleto());
     
     }
 
