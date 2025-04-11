@@ -40,7 +40,7 @@ public class RegistroViewContoller extends CoreViewController {
 
     @FXML
     void handleLogin(ActionEvent event) {
-        if (mostrarMensajeConfirmacion("¿Estás seguro de ir al apartado de inicio de sesión?")) {
+        if (mostrarMensajeConfirmacion("¿Volvemos al inicio de sesión?")) {
             browseWindow("/co/edu/uniquindio/task/task_app/view/login-view.fxml", "Inicio de sesión", event);
         }
 

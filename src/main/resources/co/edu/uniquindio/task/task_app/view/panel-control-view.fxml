@@ -44,6 +44,7 @@
 
             <!-- Perfil usuario -->
             <HBox alignment="CENTER_LEFT" spacing="10">
+            <Button fx:id="btnVolverInicio" mnemonicParsing="false" onAction="#onVolverInicio" opacity="0.9" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #cbd5e0; -fx-border-color: #4a6cf7;" />
                 <Circle fill="#cbd5e0" radius="25" />
                 <VBox>
                     <Text fx:id="textNombre" style="-fx-font-size: 14px; -fx-fill: #2d3748;" text="Ana García" />
@@ -98,7 +99,7 @@
 
                         <!-- Lista de Tareas con TableView -->
                         <VBox style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20;">
-                            <Text style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="Tareas Prioritarias">
+                            <Text fill="#d4cfcf" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="Tareas Prioritarias">
                                 <VBox.margin>
                                     <Insets bottom="20" />
                                 </VBox.margin>

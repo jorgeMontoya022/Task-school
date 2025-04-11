@@ -92,7 +92,7 @@ public class InicioSesionViewController extends CoreViewController {
 
     @FXML
     void handleRegister(ActionEvent event) {
-        if(mostrarMensajeConfirmacion("¿Estás seguro de ir al apartado de registro?")){
+        if(mostrarMensajeConfirmacion("¿Esto te lleva al registro... ¿le damos?")){
             browseWindow("/co/edu/uniquindio/task/task_app/view/registro-view.fxml", "Registro", event);
 
         }
@@ -102,6 +102,9 @@ public class InicioSesionViewController extends CoreViewController {
     @FXML
     void initialize() {
         inicioSesionController = new InicioSesionController();
+        emailField.setText("jorgew.montoyat@uqvirtual.edu.co");
+        passwordField.setText("maloh");
+        
 
     }
 

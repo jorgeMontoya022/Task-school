@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f5f7fa;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.task.task_app.view.CreacionTareasViewController">
+    
+    <!-- Tarjeta principal con constraints responsivas -->
+    <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e0e6ed; -fx-border-width: 1;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+        
+        <!-- Encabezado responsive -->
+        <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #4a6cf7; -fx-background-radius: 10 10 0 0; -fx-padding: 15;">
+            <Label text="Ensayo Final Literatura" textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS">
+                <font>
+                    <Font name="System Bold" size="20.0" />
+                </font>
+            </Label>
+            <HBox HBox.hgrow="ALWAYS" />
+            <Button fx:id="btnEditar" onAction="#onEditarTarea" style="-fx-background-color: white; -fx-text-fill: #4a6cf7; -fx-background-radius: 15;" text="Editar">
+                <padding>
+                    <Insets bottom="5" left="15" right="15" top="5" />
+                </padding>
+            </Button>
+            <padding>
+                <Insets bottom="5" left="10" right="10" top="5" />
+            </padding>
+        </HBox>
+        
+        <!-- Contenido -->
+        <VBox spacing="15.0" style="-fx-padding: 15;" VBox.vgrow="ALWAYS">
+            <Label style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #2d3748;" text="Detalles de la Tarea" />
+            
+            <!-- Detalles de la tarea - Grid responsive -->
+            <GridPane hgap="15" vgap="15" VBox.vgrow="NEVER">
+                <columnConstraints>
+                    <ColumnConstraints minWidth="80" percentWidth="15" />
+                    <ColumnConstraints minWidth="120" percentWidth="35" />
+                    <ColumnConstraints minWidth="80" percentWidth="15" />
+                    <ColumnConstraints minWidth="120" percentWidth="35" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="30.0" />
+                    <RowConstraints minHeight="30.0" />
+                    <RowConstraints minHeight="30.0" />
+                    <RowConstraints minHeight="30.0" />
+                </rowConstraints>
+
+                <!-- Fila 1 -->
+                <Label style="-fx-font-weight: bold; -fx-text-fill: #718096;" text="Materia:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <ComboBox fx:id="cbMateria" maxWidth="1.7976931348623157E308" promptText="Seleccionar materia" GridPane.columnIndex="1" />
+                
+                <Label style="-fx-font-weight: bold; -fx-text-fill: #718096;" text="Prioridad:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                <Label fx:id="lblPrioridad" style="-fx-text-fill: #e53e3e;" text="Alta" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                <!-- Fila 2 -->
+                <Label style="-fx-font-weight: bold; -fx-text-fill: #718096;" text="Fecha límite:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <DatePicker fx:id="datePickerFechaLimite" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                
+                <Label style="-fx-font-weight: bold; -fx-text-fill: #718096;" text="Creada:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <Label fx:id="lblFechaCreada" style="-fx-text-fill: #2d3748;" text="18/03/2023" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+                <!-- Fila 3 -->
+                <Label style="-fx-font-weight: bold; -fx-text-fill: #718096;" text="Titulo tarea:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <Label fx:id="lblProfesor" style="-fx-text-fill: #2d3748;" text="nombre profesor" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                
+                <Label style="-fx-font-weight: bold; -fx-text-fill: #718096;" text="Tiempo restante:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                <Label fx:id="lblTiempoRestante" style="-fx-text-fill: #f56565;" text="5 horas 23 min" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+
+                <!-- Fila 4 -->
+                <Label style="-fx-font-weight: bold; -fx-text-fill: #718096;" text="Estado:" GridPane.rowIndex="3" />
+                <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <Label fx:id="lblEstado" style="-fx-text-fill: #e53e3e; -fx-background-color: #fc8181; -fx-background-radius: 12; -fx-opacity: 0.8; -fx-padding: 5 15;" text="Pendiente" />
+                </HBox>
+                
+                <Label style="-fx-font-weight: bold; -fx-text-fill: #718096;" text="Profesor:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                <TextField fx:id="txtNombreTarea" maxWidth="1.7976931348623157E308" promptText="Ingrese el titulo de la tarea" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                   <opaqueInsets>
+                      <Insets />
+                   </opaqueInsets>
+                </TextField>
+            </GridPane>
+            
+            <!-- Descripción con crecimiento vertical -->
+            <Label style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #2d3748;" text="Descripción" />
+            <TextArea fx:id="txtDescripcion" minHeight="50.0" prefHeight="100.0" style="-fx-background-color: #f8fafc; -fx-border-color: #e0e6ed; -fx-border-radius: 5;" wrapText="true" VBox.vgrow="ALWAYS">
+                <text>Ensayo final del curso de Literatura Contemporánea. Debe tener 3000 palabras, enfocado en la obra "Cien años de soledad" de Gabriel García Márquez. Incluir análisis de personajes y citar en formato APA.</text>
+            </TextArea>
+            
+            <!-- Botones inferiores con disposición responsiva -->
+            <HBox alignment="CENTER_LEFT" spacing="15.0" VBox.vgrow="NEVER">
+                <Button fx:id="btnAgregar" minWidth="100.0" onAction="#onAgregarTarea" style="-fx-background-color: #4a6cf7; -fx-text-fill: white; -fx-background-radius: 5;" text="Agregar" HBox.hgrow="SOMETIMES">
+                    <padding>
+                        <Insets bottom="10" left="20" right="20" top="10" />
+                    </padding>
+                </Button>
+                <Button fx:id="btnCompletada" minWidth="180.0" onAction="#onMarcarCompletada" style="-fx-background-color: #4a6cf7; -fx-text-fill: white; -fx-background-radius: 5;" text="Marcar como completada" wrapText="true" HBox.hgrow="SOMETIMES">
+                    <padding>
+                        <Insets bottom="10" left="20" right="20" top="10" />
+                    </padding>
+                </Button>
+                <HBox HBox.hgrow="ALWAYS" />
+            </HBox>
+        </VBox>
+    </VBox>
+</AnchorPane>

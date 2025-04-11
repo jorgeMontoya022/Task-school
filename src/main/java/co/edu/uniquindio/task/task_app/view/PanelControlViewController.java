@@ -37,6 +37,9 @@ public class PanelControlViewController extends CoreViewController{
     private Button btnTareasPendiente;
 
     @FXML
+    private Button btnVolverInicio;
+
+    @FXML
     private TableColumn<?, ?> colEstado;
 
     @FXML
@@ -60,6 +63,15 @@ public class PanelControlViewController extends CoreViewController{
     @FXML
     private TableView<?> tablaTareas;
 
+    
+    @FXML
+    void onVolverInicio(ActionEvent event) {
+        if(mostrarMensajeConfirmacion("¿Deseas volver al inicio?")) {
+            browseWindow("/co/edu/uniquindio/task/task_app/view/login-view.fxml", "Inicio de sesión", event);
+        }
+
+    }
+
     @FXML
     private Text textCarrera;
 
@@ -68,6 +80,7 @@ public class PanelControlViewController extends CoreViewController{
 
     @FXML
     void onAgregarTarea(ActionEvent event) {
+        browseWindowNormalSize("/co/edu/uniquindio/task/task_app/view/creacion-tareas-view.fxml", "Vista tarea", event);
 
     }
 
