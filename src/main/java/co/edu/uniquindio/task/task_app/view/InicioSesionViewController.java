@@ -92,7 +92,10 @@ public class InicioSesionViewController extends CoreViewController {
 
     @FXML
     void handleRegister(ActionEvent event) {
+        if(mostrarMensajeConfirmacion("¿Estás seguro de ir al apartado de registro?")){
+            browseWindow("/co/edu/uniquindio/task/task_app/view/registro-view.fxml", "Registro", event);
 
+        }
 
     }
 

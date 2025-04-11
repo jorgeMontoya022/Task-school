@@ -47,9 +47,20 @@ public class TaskSchoolUtils {
             "Universidad del quindío", 
             "Ing.Civil");
 
+
+            //-------------------------------------------------------------------------------------------
+
+            Usuario usuario3 = new Usuario(
+                "Samuel Castaño", 
+                "samuel@gmail.com", 
+                "samuel", 
+                "Uniquindio", 
+                "Ginecología");
+
             ArrayList<Usuario> listaUsuarios = new ArrayList<>();
             listaUsuarios.add(usuario1);
             listaUsuarios.add(usuario2);
+            listaUsuarios.add(usuario3);
 
             TaskScholar taskScholar = new TaskScholar();
             taskScholar.setListaUsuarios(listaUsuarios);

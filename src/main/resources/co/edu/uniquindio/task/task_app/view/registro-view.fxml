@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane prefHeight="600" prefWidth="800" style="-fx-background-color: #f5f7fa;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.task.task_app.view.RegistroViewContoller">
+    
+    <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        
+        <!-- Panel derecho con formulario de registro -->
+        <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
+            <BorderPane maxWidth="500" minWidth="300">
+                <center>
+                    <VBox spacing="0" style="-fx-background-color: white;                                               -fx-border-color: #e0e6ed;                                               -fx-border-width: 1;                                               -fx-border-radius: 10;                                               -fx-background-radius: 10;                                               -fx-padding: 30;">
+                        
+                        <!-- Cabecera con logo y título -->
+                        <StackPane alignment="CENTER" VBox.vgrow="NEVER">
+                            <VBox alignment="CENTER" spacing="10">
+                                <StackPane>
+                                    <Circle fill="#4a6cf7" radius="40" />
+                                    <Label text="TS" textFill="WHITE">
+                                        <font>
+                                            <Font name="System Bold" size="24" />
+                                        </font>
+                                    </Label>
+                                </StackPane>
+                                
+                                <Label text="Crear Cuenta" textFill="#2d3748">
+                                    <font>
+                                        <Font name="System Bold" size="24" />
+                                    </font>
+                                </Label>
+                            </VBox>
+                            <padding>
+                                <Insets bottom="20" />
+                            </padding>
+                        </StackPane>
+                        
+                        <!-- Formulario de registro -->
+                        <VBox spacing="15" VBox.vgrow="ALWAYS">
+                            <!-- Nombre completo -->
+                            <Label text="Nombre completo" textFill="#718096">
+                                <font>
+                                    <Font size="14" />
+                                </font>
+                            </Label>
+                            <TextField fx:id="nombreField" prefHeight="40" promptText="Ingrese su nombre completo" style="-fx-background-color: #f8fafc;                                                -fx-border-color: #e0e6ed;                                                -fx-border-width: 1;                                                -fx-border-radius: 5;                                                -fx-background-radius: 5;" />
+                            
+                            <!-- Correo electrónico -->
+                            <Label text="Correo electrónico" textFill="#718096">
+                                <font>
+                                    <Font size="14" />
+                                </font>
+                            </Label>
+                            <TextField fx:id="emailField" prefHeight="40" promptText="Ingrese su correo electrónico" style="-fx-background-color: #f8fafc;                                                -fx-border-color: #e0e6ed;                                                -fx-border-width: 1;                                                -fx-border-radius: 5;                                                -fx-background-radius: 5;" />
+                            
+                            <!-- Contraseña -->
+                            <Label text="Contraseña" textFill="#718096">
+                                <font>
+                                    <Font size="14" />
+                                </font>
+                            </Label>
+                            <PasswordField fx:id="passwordField" prefHeight="40" promptText="Ingrese su contraseña" style="-fx-background-color: #f8fafc;                                                    -fx-border-color: #e0e6ed;                                                    -fx-border-width: 1;                                                    -fx-border-radius: 5;                                                    -fx-background-radius: 5;" />
+                            
+                            <!-- Universidad y Carrera en GridPane para responsive -->
+                            <GridPane hgap="10" vgap="5">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="50" />
+                                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="50" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                
+                                <!-- Universidad -->
+                                <Label text="Universidad" textFill="#718096" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                    <font>
+                                        <Font size="14" />
+                                    </font>
+                                </Label>
+                                <TextField fx:id="universidadField" prefHeight="40" promptText="Universidad" style="-fx-background-color: #f8fafc;                                                    -fx-border-color: #e0e6ed;                                                    -fx-border-width: 1;                                                    -fx-border-radius: 5;                                                    -fx-background-radius: 5;" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                
+                                <!-- Carrera -->
+                                <Label text="Carrera" textFill="#718096" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                    <font>
+                                        <Font size="14" />
+                                    </font>
+                                </Label>
+                                <TextField fx:id="carreraField" prefHeight="40" promptText="Carrera" style="-fx-background-color: #f8fafc;                                                    -fx-border-color: #e0e6ed;                                                    -fx-border-width: 1;                                                    -fx-border-radius: 5;                                                    -fx-background-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                            </GridPane>
+                            
+                            <!-- Botón de registro -->
+                            <Button fx:id="registerButton" maxWidth="Infinity" onAction="#handleRegister" prefHeight="40" style="-fx-background-color: #4a6cf7; -fx-background-radius: 5;" text="Crear Cuenta" textFill="WHITE">
+                                <font>
+                                    <Font name="System Bold" size="14" />
+                                </font>
+                                <VBox.margin>
+                                    <Insets bottom="20" top="20" />
+                                </VBox.margin>
+                            </Button>
+                        </VBox>
+                        
+                        <!-- Enlace para inicio de sesión -->
+                        <StackPane alignment="CENTER" VBox.vgrow="NEVER">
+                            <Hyperlink fx:id="loginLink" onAction="#handleLogin" text="¿Ya tienes cuenta? Inicia sesión" textFill="#4a6cf7">
+                                <font>
+                                    <Font size="14" />
+                                </font>
+                            </Hyperlink>
+                        </StackPane>
+                    </VBox>
+                </center>
+            </BorderPane>
+            <padding>
+                <Insets bottom="30" left="30" right="30" top="30" />
+            </padding>
+        </VBox>
+        
+        <!-- Panel derecho con frase motivacional -->
+        <VBox alignment="CENTER" prefHeight="669.0" prefWidth="393.0" style="-fx-background-color: #4a6cf7;" HBox.hgrow="ALWAYS">
+            <padding>
+                <Insets bottom="40" left="40" right="40" top="40" />
+            </padding>
+            
+            <TextFlow textAlignment="CENTER">
+                <Text fill="WHITE" text="Tu camino al éxito empieza con orden. Prioriza tus metas, deja que TaskScholar te acompañe." wrappingWidth="400">
+                    <font>
+                        <Font name="System Bold" size="24" />
+                    </font>
+                </Text>
+            </TextFlow>
+        </VBox>
+    </HBox>
+</AnchorPane>
