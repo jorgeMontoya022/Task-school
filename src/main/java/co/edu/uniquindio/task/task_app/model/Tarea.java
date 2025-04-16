@@ -7,8 +7,9 @@ public class Tarea {
     private String descripción;
     private String titulo;
     private LocalDate fechaEntrega;
+    private EstadoTarea estadoTarea;
 
-    public Tarea(Materia materia, String descripción, String titulo, LocalDate fechaEntrega) {
+    public Tarea(Materia materia, String descripción, String titulo, LocalDate fechaEntrega, EstadoTarea estadoTarea) {
         this.materia = materia;
         this.descripción = descripción;
         this.titulo = titulo;
@@ -50,6 +51,15 @@ public class Tarea {
     public void setFechaEntrega(LocalDate fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
     }
+
+    public EstadoTarea getEstadoTarea() {
+        return estadoTarea;
+    }
+
+    public void setEstadoTarea(EstadoTarea estadoTarea) {
+        this.estadoTarea = estadoTarea;
+    }
+    
     
 
 }
