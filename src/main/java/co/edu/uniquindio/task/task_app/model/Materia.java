@@ -54,6 +54,21 @@ public class Materia {
         this.tareasPendientes = tareasPendientes;
     }
 
+    public ColaPrioridad<Tarea> getColaTareas() {
+        return colaTareas;
+    }
+
+    public void setColaTareas(ColaPrioridad<Tarea> colaTareas) {
+        this.colaTareas = colaTareas;
+    }
+
+    public void agregarTarea(Tarea tarea) {
+        colaTareas.add(tarea);
+        tareasPendientes++;
+    }
+
+    
+
   
    
 }
