@@ -3,6 +3,7 @@ package co.edu.uniquindio.task.task_app.utils;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import co.edu.uniquindio.task.task_app.model.EstadoTarea;
 import co.edu.uniquindio.task.task_app.model.Materia;
 import co.edu.uniquindio.task.task_app.model.Tarea;
 import co.edu.uniquindio.task.task_app.model.TaskScholar;
@@ -26,7 +27,30 @@ public class TaskSchoolUtils {
             "Mapa conceptual", 
             LocalDate.of(2025, 4, 20));
         
+        Tarea tarea2 = new Tarea(
+            materia1, 
+            "Realizar aplicación con javaFX", 
+            "Aplicación fx", 
+            LocalDate.of(2025, 4, 18));
+        
         materia1.agregarTarea(tarea1); // Agrega la tarea a la cola
+        materia1.agregarTarea(tarea2);
+
+        //----Materia 2 ----
+        Materia materia2 = new Materia(
+            "Infraestructura Comp",
+            "Jorge Orlando",
+            "Lunes 9-11am - Jueves 11-1pm",
+            0
+        );
+
+        Tarea tarea3 = new Tarea(
+            materia2, 
+            "Realizar un laboratorio sobre linux", 
+            "Laboratorio 10", 
+            LocalDate.of(2025, 4, 17));
+
+        materia2.agregarTarea(tarea3);
 
         // ----- Usuario 1 -----
         Usuario usuario1 = new Usuario(
@@ -38,7 +62,10 @@ public class TaskSchoolUtils {
 
         ArrayList<Materia> materiasUsuario1 = new ArrayList<>();
         materiasUsuario1.add(materia1);
+        materiasUsuario1.add(materia2);
         usuario1.setListaMaterias(materiasUsuario1);
+        
+    
 
         // ----- Usuario 2 -----
         Usuario usuario2 = new Usuario(

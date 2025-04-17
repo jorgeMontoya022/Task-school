@@ -1,13 +1,17 @@
 package co.edu.uniquindio.task.task_app.view;
 
 import java.util.Optional;
+import java.util.function.Function;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.Node;
@@ -67,5 +71,25 @@ public abstract class CoreViewController {
         alert.setContentText(message);
         Optional<ButtonType> action = alert.showAndWait();
         return action.get() == ButtonType.OK;
+    }
+
+     protected  <T> void initializeComboBox(ComboBox<T> comboBox,
+                                        ObservableList<T> items,
+                                        Function<T, String> displayFunction) {
+        comboBox.setItems(items);
+        comboBox.setCellFactory(lv -> new ListCell<T>() {
+            @Override
+            protected void updateItem(T item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? "" : displayFunction.apply(item));
+            }
+        });
+        comboBox.setButtonCell(new ListCell<T>() {
+            @Override
+            protected void updateItem(T item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(empty ? "" : displayFunction.apply(item));
+            }
+        });
     }
 }

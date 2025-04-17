@@ -67,5 +67,14 @@ public class Materia {
         tareasPendientes++;
     }
 
+    @Override
+    public String toString() {
+        return nombreMateria;
+    }
+
+    
+
+ 
+
    
 }

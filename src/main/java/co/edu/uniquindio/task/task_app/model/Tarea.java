@@ -9,11 +9,12 @@ public class Tarea {
     private LocalDate fechaEntrega;
     private EstadoTarea estadoTarea;
 
-    public Tarea(Materia materia, String descripción, String titulo, LocalDate fechaEntrega, EstadoTarea estadoTarea) {
+    public Tarea(Materia materia, String descripción, String titulo, LocalDate fechaEntrega) {
         this.materia = materia;
         this.descripción = descripción;
         this.titulo = titulo;
         this.fechaEntrega = fechaEntrega;
+        this.estadoTarea = estadoTarea.PENDIENTE;
     }
 
     public Tarea() {

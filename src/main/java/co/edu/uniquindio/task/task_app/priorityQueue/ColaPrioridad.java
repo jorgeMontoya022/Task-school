@@ -2,10 +2,12 @@ package co.edu.uniquindio.task.task_app.priorityQueue;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
- * Clase que implementa una Cola de Prioridad (Priority Queue) usando un heap binario.
+ * Clase que implementa una Cola de Prioridad (Priority Queue) usando un heap
+ * binario.
  * Permite agregar elementos con prioridad, eliminarlos y consultar su tamaño.
  * 
  * @param <T> Tipo de datos que manejará la cola de prioridad.
@@ -29,7 +31,8 @@ public class ColaPrioridad<T> {
     }
 
     /**
-     * Agrega un nuevo elemento a la cola de prioridad y reordena el heap hacia arriba.
+     * Agrega un nuevo elemento a la cola de prioridad y reordena el heap hacia
+     * arriba.
      * 
      * @param element Elemento a agregar
      */
@@ -39,7 +42,8 @@ public class ColaPrioridad<T> {
     }
 
     /**
-     * Elimina y retorna el elemento con mayor prioridad (el que esté más arriba en el heap).
+     * Elimina y retorna el elemento con mayor prioridad (el que esté más arriba en
+     * el heap).
      * 
      * @return Elemento con mayor prioridad
      * @throws NoSuchElementException si la cola está vacía
@@ -61,6 +65,20 @@ public class ColaPrioridad<T> {
         return result;
     }
 
+
+      /**
+     * Elimina y retorna el elemento con mayor prioridad, o null si la cola está vacía.
+     * Este método es similar a remove() pero no lanza excepción si la cola está vacía.
+     * 
+     * @return Elemento con mayor prioridad o null si la cola está vacía
+     */
+    public T poll() {
+        if (heap.isEmpty()) {
+            return null;
+        }
+        return remove();
+    }
+
     /**
      * Verifica si la cola está vacía.
      * 
@@ -80,7 +98,8 @@ public class ColaPrioridad<T> {
     }
 
     /**
-     * Reordena el heap hacia arriba desde un índice dado para mantener la propiedad del heap.
+     * Reordena el heap hacia arriba desde un índice dado para mantener la propiedad
+     * del heap.
      * 
      * @param index Índice desde donde se debe hacer el reordenamiento
      */
@@ -99,7 +118,8 @@ public class ColaPrioridad<T> {
     }
 
     /**
-     * Reordena el heap hacia abajo desde un índice dado para mantener la propiedad del heap.
+     * Reordena el heap hacia abajo desde un índice dado para mantener la propiedad
+     * del heap.
      * 
      * @param index Índice desde donde se debe hacer el reordenamiento
      */
@@ -141,5 +161,36 @@ public class ColaPrioridad<T> {
         T temp = heap.get(i);
         heap.set(i, heap.get(j));
         heap.set(j, temp);
+    }
+
+        /**
+     * Convierte la cola de prioridad a una lista sin modificar la cola original.
+     * 
+     * @return Lista con los elementos de la cola de prioridad ordenados por prioridad
+     */
+    public List<T> toList() {
+        List<T> resultado = new ArrayList<>();
+        
+        // Si la cola está vacía, retornar lista vacía
+        if (isEmpty()) {
+            return resultado;
+        }
+        
+        // Crear una copia de la cola
+        ColaPrioridad<T> colaTemp = new ColaPrioridad<>(this.comparator);
+        
+        // Extraer todos los elementos
+        T elemento;
+        while ((elemento = this.poll()) != null) {
+            resultado.add(elemento);
+            colaTemp.add(elemento);
+        }
+        
+        // Restaurar la cola original
+        while ((elemento = colaTemp.poll()) != null) {
+            this.add(elemento);
+        }
+        
+        return resultado;
     }
 }
