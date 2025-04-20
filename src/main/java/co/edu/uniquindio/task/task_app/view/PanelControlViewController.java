@@ -2,6 +2,8 @@ package co.edu.uniquindio.task.task_app.view;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import co.edu.uniquindio.task.task_app.Session.Sesion;
@@ -203,6 +205,7 @@ public class PanelControlViewController extends CoreViewController implements Ob
         usuario = (Usuario) Sesion.getInstance().getUsuario();
         System.out.println("Usuario en PanelControl: " + usuario);
         initView();
+        setupFilter();
         ObserverManagement.getInstance().addObserver(EventType.MATERIA, this);
 
     }
@@ -223,6 +226,12 @@ public class PanelControlViewController extends CoreViewController implements Ob
     private void mostrarEntregas() {
         mostrarCantTareasPendientes();
         mostrarCantTareasProximas();
+        mostrarCantTareasCompletadas();
+    }
+
+    private void mostrarCantTareasCompletadas() {
+        int tareasCompletadas = panelControlController.contarTareasCompletadas(usuario.getCorreo());
+        labelTareasCompletadas.setText(String.valueOf(tareasCompletadas));
     }
 
     private void mostrarCantTareasProximas() {
@@ -251,6 +260,28 @@ public class PanelControlViewController extends CoreViewController implements Ob
             datePickerFechaLimite.setValue(tareaSeleccionada.getFechaEntrega());
             cbEstado.setValue(tareaSeleccionada.getEstadoTarea());
         }
+    }
+
+    private void setupFilter() {
+        txtfiltrarTarea.textProperty().addListener((observable, oldValue, newValue) -> {
+            List<Tarea> originalList = panelControlController.getTareas(usuario.getCorreo());
+            ObservableList<Tarea> filteredLis = filterList(originalList, newValue);
+            tablaTareas.setItems(filteredLis);
+        });
+    }
+
+    private ObservableList<Tarea> filterList(List<Tarea> originalList, String newValue) {
+        List<Tarea> filteredList = new ArrayList<>();
+        for (Tarea tarea : originalList) {
+            if(encontrarTarea(tarea, newValue)) filteredList.add(tarea);
+
+        }
+        return FXCollections.observableList(filteredList);
+    }
+
+    private boolean encontrarTarea(Tarea tarea, String newValue) {
+        return(tarea.getMateria().getNombreMateria().toLowerCase().contains(newValue.toLowerCase()) || 
+        tarea.getTitulo().toLowerCase().contains(newValue.toLowerCase()));
     }
 
     private void initializeDataComboBox() {
@@ -340,10 +371,10 @@ public class PanelControlViewController extends CoreViewController implements Ob
     private void actualizarTarea() {
         Tarea tarea = buildDataTarea();
         if (tareaSeleccionada != null) {
-            if(validarFormulario(tarea)){
-                if(!verificarCambios(tareaSeleccionada, tarea)){
+            if (validarFormulario(tarea)) {
+                if (!verificarCambios(tareaSeleccionada, tarea)) {
                     mostrarMensaje("Error", "Sin cambios",
-                     "No se puede actualizar sin cambios", Alert.AlertType.WARNING);
+                            "No se puede actualizar sin cambios", Alert.AlertType.WARNING);
                 }
 
                 int selectedIndex = tablaTareas.getSelectionModel().getSelectedIndex();
@@ -354,29 +385,29 @@ public class PanelControlViewController extends CoreViewController implements Ob
                     listaTareas.set(selectedIndex, tarea);
                     tablaTareas.refresh();
                     tablaTareas.getSelectionModel().select(tarea);
-                    mostrarMensaje("Notificación", "Tarea Actualizada", 
-                    "La tarea ha sido actualizada con éxito", Alert.AlertType.INFORMATION);
+                    mostrarMensaje("Notificación", "Tarea Actualizada",
+                            "La tarea ha sido actualizada con éxito", Alert.AlertType.INFORMATION);
                     getTareas();
                     limpiarCampos();
                 }
             } else {
-                mostrarMensaje("Error", "La tarea no ctualizada", 
-                "La tarea no pudo ser actualizada", Alert.AlertType.ERROR);
+                mostrarMensaje("Error", "La tarea no ctualizada",
+                        "La tarea no pudo ser actualizada", Alert.AlertType.ERROR);
             }
 
         } else {
-            mostrarMensaje("Advertencia", "Tarea no seleccionada", 
-            "Por favor selecciones una tarea que desea actualizar", Alert.AlertType.WARNING);
+            mostrarMensaje("Advertencia", "Tarea no seleccionada",
+                    "Por favor selecciones una tarea que desea actualizar", Alert.AlertType.WARNING);
         }
     }
 
     private boolean verificarCambios(Tarea tareaSeleccionada, Tarea tarea) {
         return !tareaSeleccionada.getTitulo().equals(tarea.getTitulo()) ||
-        !tareaSeleccionada.getFechaEntrega().equals(tarea.getFechaEntrega()) ||
-        !tareaSeleccionada.getEstadoTarea().equals(tarea.getEstadoTarea()) ||
-        !tareaSeleccionada.getMateria().equals(tarea.getMateria()) ||
-        !tareaSeleccionada.getDescripción().equals(tarea.getDescripción());    
-      
+                !tareaSeleccionada.getFechaEntrega().equals(tarea.getFechaEntrega()) ||
+                !tareaSeleccionada.getEstadoTarea().equals(tarea.getEstadoTarea()) ||
+                !tareaSeleccionada.getMateria().equals(tarea.getMateria()) ||
+                !tareaSeleccionada.getDescripción().equals(tarea.getDescripción());
+
     }
 
     private void limpiarCampos() {
@@ -410,7 +441,7 @@ public class PanelControlViewController extends CoreViewController implements Ob
             mensaje += "La fecha de entrega no puede ser anterior al día actual.\n";
         }
 
-        if(tarea.getEstadoTarea() == null) {
+        if (tarea.getEstadoTarea() == null) {
             mensaje += "El estado es requerido.\n";
         }
 

@@ -89,6 +89,10 @@ public class ModelFactory {
     public boolean actualizarTarea(Tarea tareaSeleccionada, Tarea tarea, String correo) {
         return taskScholar.actualizarTarea(tareaSeleccionada, tarea, correo);
     }
+
+    public int contarTareasCompletadas(String correo) {
+       return taskScholar.contarTareasCompletadas(correo);
+    }
     
 
     
