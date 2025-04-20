@@ -19,5 +19,13 @@ public class PanelControlController extends CoreController{
         return ModelFactory.agregarTarea(tarea, correo);
    
     }
+
+    public int contarTareasPendientes(String correo) {
+        return ModelFactory.contarTareasPendientes(correo);
+    }
+
+    public int contarTareasProximas(String correo) {
+       return ModelFactory.contarTareasProximas(correo);
+    }
     
 }

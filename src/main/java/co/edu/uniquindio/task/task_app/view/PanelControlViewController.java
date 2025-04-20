@@ -10,6 +10,9 @@ import co.edu.uniquindio.task.task_app.model.EstadoTarea;
 import co.edu.uniquindio.task.task_app.model.Materia;
 import co.edu.uniquindio.task.task_app.model.Tarea;
 import co.edu.uniquindio.task.task_app.model.Usuario;
+import co.edu.uniquindio.task.task_app.view.observer.EventType;
+import co.edu.uniquindio.task.task_app.view.observer.ObserverManagement;
+import co.edu.uniquindio.task.task_app.view.observer.ObserverView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,13 +31,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-public class PanelControlViewController extends CoreViewController {
+public class PanelControlViewController extends CoreViewController implements ObserverView{
 
     PanelControlController panelControlController;
 
     ObservableList listaTareas = FXCollections.observableArrayList();
 
     Usuario usuario;
+
+    Tarea tareaSeleccionada;
 
     @FXML
     private ResourceBundle resources;
@@ -103,6 +108,15 @@ public class PanelControlViewController extends CoreViewController {
     private Text labeBienvenida;
 
     @FXML
+    private Text labelTareasCompletadas;
+
+    @FXML
+    private Text labelTareasPendientes;
+
+    @FXML
+    private Text labelVencimientoPróximo;
+
+    @FXML
     private AnchorPane materiasView;
 
     @FXML
@@ -119,12 +133,22 @@ public class PanelControlViewController extends CoreViewController {
 
     @FXML
     void oEliminarTarea(ActionEvent event) {
+        eliminarTarea();
 
+    }
+
+    private void eliminarTarea() {
+        mostrarMensaje("Funcionalidad no disponible", "Aviso", "¡Ups! Esta funcionalidad todavía no está lista. Pronto estará disponible.", Alert.AlertType.INFORMATION);
     }
 
     @FXML
     void onActualizarTarea(ActionEvent event) {
+        actualizarTarea();
 
+    }
+
+    private void actualizarTarea() {
+        mostrarMensaje("Funcionalidad no disponible", "Aviso", "¡Ups! Esta funcionalidad todavía no está lista. Pronto estará disponible.", Alert.AlertType.INFORMATION);
     }
 
     @FXML
@@ -181,6 +205,7 @@ public class PanelControlViewController extends CoreViewController {
         usuario = (Usuario) Sesion.getInstance().getUsuario();
         System.out.println("Usuario en PanelControl: " + usuario);
         initView();
+        ObserverManagement.getInstance().addObserver(EventType.MATERIA, this);
 
     }
 
@@ -193,15 +218,47 @@ public class PanelControlViewController extends CoreViewController {
         tablaTareas.setItems(listaTareas);
         listenerSelection();
         mostrarInformacion();
+        mostrarEntregas();
 
+    }
+
+    private void mostrarEntregas() {
+        mostrarCantTareasPendientes();
+        mostrarCantTareasProximas();
+    }
+
+   
+
+    private void mostrarCantTareasProximas() {
+       int tareasProximas = panelControlController.contarTareasProximas(usuario.getCorreo());
+       labelVencimientoPróximo.setText(String.valueOf(tareasProximas));
+    }
+
+    private void mostrarCantTareasPendientes() {
+       int tareasPendientes = panelControlController.contarTareasPendientes(usuario.getCorreo());
+       labelTareasPendientes.setText(String.valueOf(tareasPendientes));
     }
 
     private void listenerSelection() {
+        tablaTareas.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
+            tareaSeleccionada = newSelection;
+            mostrarInformacionTarea(tareaSeleccionada);
+        });
+
 
     }
 
+    private void mostrarInformacionTarea(Tarea tareaSeleccionada) {
+       if(tareaSeleccionada != null) {
+        cbMateria.setValue(tareaSeleccionada.getMateria());
+        txtDescripcion.setText(tareaSeleccionada.getDescripción());
+        txtNombreTarea.setText(tareaSeleccionada.getTitulo());
+        datePickerFechaLimite.setValue(tareaSeleccionada.getFechaEntrega());
+       }
+    }
+
     private void initializeDataComboBox() {
-        ObservableList<Materia>materias = FXCollections.observableArrayList(usuario.getListaMaterias());
+        ObservableList<Materia> materias = FXCollections.observableArrayList(usuario.getListaMaterias());
 
         initializeComboBox(cbMateria, materias, item -> item.getNombreMateria());
 
@@ -209,13 +266,11 @@ public class PanelControlViewController extends CoreViewController {
             if (newValue != null) {
                 labelNombreProfesor.setText(newValue.getProfesor());
             } else {
-                labelNombreProfesor.setText("profesor"); 
+                labelNombreProfesor.setText("profesor");
             }
         });
 
         cbEstado.setItems(FXCollections.observableArrayList(EstadoTarea.values()));
-
-
 
     }
 
@@ -224,7 +279,7 @@ public class PanelControlViewController extends CoreViewController {
             if (newDate != null) {
                 long diasRestantes = java.time.temporal.ChronoUnit.DAYS.between(java.time.LocalDate.now(), newDate);
                 String prioridad;
-    
+
                 if (diasRestantes <= 2) {
                     prioridad = "Alta";
                 } else if (diasRestantes <= 5) {
@@ -232,10 +287,10 @@ public class PanelControlViewController extends CoreViewController {
                 } else {
                     prioridad = "Baja";
                 }
-    
+
                 labelPrioridad.setText(prioridad);
             } else {
-                labelPrioridad.setText("");
+                labelPrioridad.setText("prioridad");
             }
         });
     }
@@ -257,10 +312,6 @@ public class PanelControlViewController extends CoreViewController {
 
     }
 
-
-   
-    
-
     private void getTareas() {
         String correo = usuario.getCorreo();
         listaTareas.clear();
@@ -269,21 +320,28 @@ public class PanelControlViewController extends CoreViewController {
     }
 
     private void agregarTarea() {
-        if (validarFormulario()) {
-            Tarea tarea = buildDataTarea();
+        Tarea tarea = buildDataTarea();
+        if (tarea == null) {
+            mostrarMensaje("Error", "Datos inválidos", "No se pudo crear la tarea", Alert.AlertType.ERROR);
+            return;
+        }
+
+        if (validarFormulario(tarea)) {
             if (panelControlController.agregarTarea(tarea, usuario.getCorreo())) {
-                
-                getTareas();
-                mostrarMensaje("Notificación Tarea", "Tarea agregada", "La tarea fue creada con éxito",
+                listaTareas.add(tarea);
+                mostrarEntregas();
+                ObserverManagement.getInstance().notifyObservers(EventType.TAREA);
+                mostrarMensaje("Notificación", "Tarea agregada", "La tarea fue creada con éxito",
                         Alert.AlertType.INFORMATION);
-                        limpiarCampos();
+                limpiarCampos();
+                getTareas();
             } else {
-                mostrarMensaje("Error", "Creación fallida", "La tarea no ha sido creada con éxito", Alert.AlertType.ERROR);
+                mostrarMensaje("Error", "Tarea no agregada", "La tarea no pudo ser agregada", Alert.AlertType.ERROR);
             }
-        } else {
-            mostrarMensaje("Advertenicia", "Datos invalidos", "Por favor ingrese datos válidos", Alert.AlertType.WARNING);
         }
     }
+
+    
 
     private void limpiarCampos() {
         txtDescripcion.clear();
@@ -295,40 +353,40 @@ public class PanelControlViewController extends CoreViewController {
     }
 
     private Tarea buildDataTarea() {
-        return new Tarea(cbMateria.getValue(), txtDescripcion.getText(), txtNombreTarea.getText(), datePickerFechaLimite.getValue());
+        return new Tarea(cbMateria.getValue(), txtDescripcion.getText(), txtNombreTarea.getText(),
+                datePickerFechaLimite.getValue());
     }
 
-    private boolean validarFormulario() {
-        StringBuilder errores = new StringBuilder();
-    
-        // Validar materia
-        if (cbMateria.getSelectionModel().getSelectedItem() == null) {
-            errores.append("- Selecciona una materia.\n");
+    private boolean validarFormulario(Tarea tarea) {
+        String mensaje = "";
+
+        if (tarea.getMateria() == null) {
+            mensaje += "La materia es requerida.\n";
         }
-    
-        // Validar nombre de la tarea
-        if (txtNombreTarea.getText() == null || txtNombreTarea.getText().trim().isEmpty()) {
-            errores.append("- Ingresa un nombre para la tarea.\n");
+
+        if (tarea.getTitulo() == null || tarea.getTitulo().trim().isEmpty()) {
+            mensaje += "El nombre de la tarea es requerido.\n";
         }
-    
-        // Validar fecha
-        LocalDate fechaEntrega = datePickerFechaLimite.getValue();
-        if (fechaEntrega == null) {
-            errores.append("- Selecciona una fecha de entrega.\n");
-        } else if (fechaEntrega.isBefore(LocalDate.now())) {
-            errores.append("- La fecha de entrega no puede ser anterior al día de hoy.\n");
+
+        if (tarea.getFechaEntrega() == null) {
+            mensaje += "La fecha de entrega es requerida.\n";
+        } else if (tarea.getFechaEntrega().isBefore(LocalDate.now())) {
+            mensaje += "La fecha de entrega no puede ser anterior al día actual.\n";
         }
-    
-        // Si hay errores, mostrar todos juntos
-        if (errores.length() > 0) {
-            mostrarMensaje("Validación del formulario", "Faltan datos o hay errores", errores.toString(), Alert.AlertType.WARNING);
+
+        if (!mensaje.isEmpty()) {
+            mostrarMensaje("Notificación de validación", "Datos no válidos", mensaje, Alert.AlertType.WARNING);
             return false;
         }
-    
+
         return true;
     }
-    
-    
-    
+
+    @Override
+    public void updateView(EventType eventType) {
+      if(eventType == EventType.MATERIA){
+        initializeDataComboBox();
+      }
+    }
 
 }

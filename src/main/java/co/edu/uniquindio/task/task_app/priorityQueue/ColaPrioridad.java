@@ -163,6 +163,12 @@ public class ColaPrioridad<T> {
         heap.set(j, temp);
     }
 
+
+    public List<T> getElementos() {
+        return new ArrayList<>(heap); // copia defensiva para no exponer la estructura
+    }
+    
+
         /**
      * Convierte la cola de prioridad a una lista sin modificar la cola original.
      * 

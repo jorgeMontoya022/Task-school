@@ -102,9 +102,7 @@ public class InicioSesionViewController extends CoreViewController {
     @FXML
     void initialize() {
         inicioSesionController = new InicioSesionController();
-        emailField.setText("jorgew.montoyat@uqvirtual.edu.co");
-        passwordField.setText("maloh");
-        
+       
 
     }
 

@@ -90,17 +90,17 @@
 
                             <VBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20;" HBox.hgrow="ALWAYS">
                                 <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Tareas Pendientes" />
-                                <Text style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="0" />
+                                <Text fx:id="labelTareasPendientes" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="0" />
                             </VBox>
 
                             <VBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20;" HBox.hgrow="ALWAYS">
                                 <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Tareas Completadas" />
-                                <Text style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="0" />
+                                <Text fx:id="labelTareasCompletadas" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-fill: #2d3748;" text="0" />
                             </VBox>
 
                             <VBox alignment="CENTER_LEFT" style="-fx-background-color: white; -fx-border-color: #e0e6ed; -fx-border-radius: 10; -fx-background-radius: 10; -fx-padding: 20;" HBox.hgrow="ALWAYS">
                                 <Text style="-fx-font-size: 14px; -fx-fill: #718096;" text="Vencimiento Próximo" />
-                                <Text style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-fill: #f56565;" text="0" />
+                                <Text fx:id="labelVencimientoPróximo" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-fill: #f56565;" text="0" />
                             </VBox>
                         </HBox>
                         

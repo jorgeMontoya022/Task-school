@@ -34,7 +34,7 @@ public class TaskScholar {
         throw new Exception("Validaciones incorrectas");
     }
 
-    private boolean verificarUsuarioExiste(String correo) {
+    public boolean verificarUsuarioExiste(String correo) {
         for (Usuario usuario : getListaUsuarios()) {
             if (usuario.getCorreo().equals(correo)) {
                 return true;
@@ -105,4 +105,115 @@ public class TaskScholar {
         // Si no se encontró la materia, retornar false
         return false;
     }
+
+    public List<Materia> getMateriasUsuario(String correo) {
+        Usuario usuario = buscarUsuario(correo);
+        return usuario.getListaMaterias();
+    }
+
+    public boolean agregarMateria(Materia materia, String correo) {
+        Usuario usuario = buscarUsuario(correo);
+
+        Materia materiaEncontrada = buscarMateria(materia.getNombreMateria(), usuario);
+
+        if (materiaEncontrada != null) {
+            return false;
+        } else {
+            usuario.getListaMaterias().add(materia);
+            return true;
+        }
+
+    }
+
+    private Materia buscarMateria(String nombreMateria, Usuario usuario) {
+        for (Materia materia : usuario.getListaMaterias()) {
+            if (materia.getNombreMateria().equalsIgnoreCase(nombreMateria)) {
+                return materia;
+            }
+        }
+        return null;
+    }
+
+    public boolean verificarMateria(String nombreMateria, String correo) {
+        Usuario usuario = buscarUsuario(correo);
+
+        for (Materia materia : usuario.getListaMaterias()) {
+            if (materia.getNombreMateria().equalsIgnoreCase(nombreMateria)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean registrarUsuario(Usuario usuario) {
+        Usuario usuarioEncontrado = buscarUsuario(usuario.getCorreo());
+
+        if (usuarioEncontrado != null) {
+            return false;
+        } else {
+            listaUsuarios.add(usuario);
+            return true;
+        }
+    }
+
+    /**
+     * @param correo
+     * @return
+     */
+    public int contarTareasPendientes(String correo) {
+        Usuario usuario = buscarUsuario(correo);
+        int tareasPendientes = 0;
+
+        for (Materia materia : usuario.getListaMaterias()) {
+            for(Tarea tarea : materia.getColaTareas().getElementos()) {
+                if(tarea.getEstadoTarea() == EstadoTarea.PENDIENTE) {
+                    tareasPendientes ++;
+                }
+            }
+
+        }
+
+        return tareasPendientes;
+    }
+
+
+    public int contarTareasCompletadas(String correo) {
+        Usuario usuario = buscarUsuario(correo);
+
+        int tareasCompletadas = 0;
+
+        for(Materia materia : usuario.getListaMaterias()) {
+            for(Tarea tarea : materia.getColaTareas().getElementos()) {
+                if (tarea.getEstadoTarea() == EstadoTarea.COMPLETADA) {
+                    tareasCompletadas ++;
+                }
+            }
+        }
+        return tareasCompletadas;
+    }
+
+
+    public int contarTareasProximas(String correo) {
+        Usuario usuario = buscarUsuario(correo);
+        int tareasProximas = 0;
+    
+        if (usuario != null) {
+            for (Materia materia : usuario.getListaMaterias()) {
+                for (Tarea tarea : materia.getColaTareas().getElementos()) {
+                    if (tarea.getEstadoTarea() == EstadoTarea.PENDIENTE) {
+                        long diasRestantes = java.time.temporal.ChronoUnit.DAYS.between(
+                            java.time.LocalDate.now(), tarea.getFechaEntrega()
+                        );
+    
+                        if (diasRestantes <= 5) { // Alta o Media prioridad
+                            tareasProximas++;
+                        }
+                    }
+                }
+            }
+        }
+    
+        return tareasProximas;
+    }
+    
 }
