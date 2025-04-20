@@ -31,7 +31,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-public class PanelControlViewController extends CoreViewController implements ObserverView{
+public class PanelControlViewController extends CoreViewController implements ObserverView {
 
     PanelControlController panelControlController;
 
@@ -138,17 +138,15 @@ public class PanelControlViewController extends CoreViewController implements Ob
     }
 
     private void eliminarTarea() {
-        mostrarMensaje("Funcionalidad no disponible", "Aviso", "¡Ups! Esta funcionalidad todavía no está lista. Pronto estará disponible.", Alert.AlertType.INFORMATION);
+        mostrarMensaje("Funcionalidad no disponible", "Aviso",
+                "¡Ups! Esta funcionalidad todavía no está lista. Pronto estará disponible.",
+                Alert.AlertType.INFORMATION);
     }
 
     @FXML
     void onActualizarTarea(ActionEvent event) {
         actualizarTarea();
 
-    }
-
-    private void actualizarTarea() {
-        mostrarMensaje("Funcionalidad no disponible", "Aviso", "¡Ups! Esta funcionalidad todavía no está lista. Pronto estará disponible.", Alert.AlertType.INFORMATION);
     }
 
     @FXML
@@ -227,34 +225,32 @@ public class PanelControlViewController extends CoreViewController implements Ob
         mostrarCantTareasProximas();
     }
 
-   
-
     private void mostrarCantTareasProximas() {
-       int tareasProximas = panelControlController.contarTareasProximas(usuario.getCorreo());
-       labelVencimientoPróximo.setText(String.valueOf(tareasProximas));
+        int tareasProximas = panelControlController.contarTareasProximas(usuario.getCorreo());
+        labelVencimientoPróximo.setText(String.valueOf(tareasProximas));
     }
 
     private void mostrarCantTareasPendientes() {
-       int tareasPendientes = panelControlController.contarTareasPendientes(usuario.getCorreo());
-       labelTareasPendientes.setText(String.valueOf(tareasPendientes));
+        int tareasPendientes = panelControlController.contarTareasPendientes(usuario.getCorreo());
+        labelTareasPendientes.setText(String.valueOf(tareasPendientes));
     }
 
     private void listenerSelection() {
-        tablaTareas.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->{
+        tablaTareas.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             tareaSeleccionada = newSelection;
             mostrarInformacionTarea(tareaSeleccionada);
         });
 
-
     }
 
     private void mostrarInformacionTarea(Tarea tareaSeleccionada) {
-       if(tareaSeleccionada != null) {
-        cbMateria.setValue(tareaSeleccionada.getMateria());
-        txtDescripcion.setText(tareaSeleccionada.getDescripción());
-        txtNombreTarea.setText(tareaSeleccionada.getTitulo());
-        datePickerFechaLimite.setValue(tareaSeleccionada.getFechaEntrega());
-       }
+        if (tareaSeleccionada != null) {
+            cbMateria.setValue(tareaSeleccionada.getMateria());
+            txtDescripcion.setText(tareaSeleccionada.getDescripción());
+            txtNombreTarea.setText(tareaSeleccionada.getTitulo());
+            datePickerFechaLimite.setValue(tareaSeleccionada.getFechaEntrega());
+            cbEstado.setValue(tareaSeleccionada.getEstadoTarea());
+        }
     }
 
     private void initializeDataComboBox() {
@@ -341,7 +337,47 @@ public class PanelControlViewController extends CoreViewController implements Ob
         }
     }
 
-    
+    private void actualizarTarea() {
+        Tarea tarea = buildDataTarea();
+        if (tareaSeleccionada != null) {
+            if(validarFormulario(tarea)){
+                if(!verificarCambios(tareaSeleccionada, tarea)){
+                    mostrarMensaje("Error", "Sin cambios",
+                     "No se puede actualizar sin cambios", Alert.AlertType.WARNING);
+                }
+
+                int selectedIndex = tablaTareas.getSelectionModel().getSelectedIndex();
+                if (panelControlController.actualizarTarea(tareaSeleccionada, tarea, usuario.getCorreo())) {
+                    ObserverManagement.getInstance().notifyObservers(EventType.TAREA);
+                    mostrarEntregas();
+                    tablaTareas.refresh();
+                    listaTareas.set(selectedIndex, tarea);
+                    tablaTareas.refresh();
+                    tablaTareas.getSelectionModel().select(tarea);
+                    mostrarMensaje("Notificación", "Tarea Actualizada", 
+                    "La tarea ha sido actualizada con éxito", Alert.AlertType.INFORMATION);
+                    getTareas();
+                    limpiarCampos();
+                }
+            } else {
+                mostrarMensaje("Error", "La tarea no ctualizada", 
+                "La tarea no pudo ser actualizada", Alert.AlertType.ERROR);
+            }
+
+        } else {
+            mostrarMensaje("Advertencia", "Tarea no seleccionada", 
+            "Por favor selecciones una tarea que desea actualizar", Alert.AlertType.WARNING);
+        }
+    }
+
+    private boolean verificarCambios(Tarea tareaSeleccionada, Tarea tarea) {
+        return !tareaSeleccionada.getTitulo().equals(tarea.getTitulo()) ||
+        !tareaSeleccionada.getFechaEntrega().equals(tarea.getFechaEntrega()) ||
+        !tareaSeleccionada.getEstadoTarea().equals(tarea.getEstadoTarea()) ||
+        !tareaSeleccionada.getMateria().equals(tarea.getMateria()) ||
+        !tareaSeleccionada.getDescripción().equals(tarea.getDescripción());    
+      
+    }
 
     private void limpiarCampos() {
         txtDescripcion.clear();
@@ -354,7 +390,7 @@ public class PanelControlViewController extends CoreViewController implements Ob
 
     private Tarea buildDataTarea() {
         return new Tarea(cbMateria.getValue(), txtDescripcion.getText(), txtNombreTarea.getText(),
-                datePickerFechaLimite.getValue());
+                datePickerFechaLimite.getValue(), cbEstado.getValue());
     }
 
     private boolean validarFormulario(Tarea tarea) {
@@ -374,6 +410,10 @@ public class PanelControlViewController extends CoreViewController implements Ob
             mensaje += "La fecha de entrega no puede ser anterior al día actual.\n";
         }
 
+        if(tarea.getEstadoTarea() == null) {
+            mensaje += "El estado es requerido.\n";
+        }
+
         if (!mensaje.isEmpty()) {
             mostrarMensaje("Notificación de validación", "Datos no válidos", mensaje, Alert.AlertType.WARNING);
             return false;
@@ -384,9 +424,11 @@ public class PanelControlViewController extends CoreViewController implements Ob
 
     @Override
     public void updateView(EventType eventType) {
-      if(eventType == EventType.MATERIA){
-        initializeDataComboBox();
-      }
+        if (eventType == EventType.MATERIA) {
+            initializeDataComboBox();
+            getTareas();
+            mostrarEntregas();
+        }
     }
 
 }

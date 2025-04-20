@@ -21,5 +21,9 @@ public class GestionMateriasController extends CoreController {
     public boolean verificarMateria(String nombreMateria, String correo) {
         return ModelFactory.verificarMateria(nombreMateria, correo);
     }
+
+    public boolean eliminarMateria(Materia materiaSeleccionada, String correo) {
+        return ModelFactory.eliminarMateria(materiaSeleccionada, correo);
+    }
     
 }

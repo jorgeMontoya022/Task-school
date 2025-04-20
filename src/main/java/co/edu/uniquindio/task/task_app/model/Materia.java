@@ -64,7 +64,10 @@ public class Materia {
 
     public void agregarTarea(Tarea tarea) {
         colaTareas.add(tarea);
-        tareasPendientes++;
+        
+        if (tarea.getEstadoTarea() == EstadoTarea.PENDIENTE) {
+            tareasPendientes++;
+        }
     }
 
     @Override

@@ -2,6 +2,7 @@ package co.edu.uniquindio.task.task_app.model;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import co.edu.uniquindio.task.task_app.priorityQueue.ColaPrioridad;
@@ -165,9 +166,9 @@ public class TaskScholar {
         int tareasPendientes = 0;
 
         for (Materia materia : usuario.getListaMaterias()) {
-            for(Tarea tarea : materia.getColaTareas().getElementos()) {
-                if(tarea.getEstadoTarea() == EstadoTarea.PENDIENTE) {
-                    tareasPendientes ++;
+            for (Tarea tarea : materia.getColaTareas().getElementos()) {
+                if (tarea.getEstadoTarea() == EstadoTarea.PENDIENTE) {
+                    tareasPendientes++;
                 }
             }
 
@@ -176,35 +177,32 @@ public class TaskScholar {
         return tareasPendientes;
     }
 
-
     public int contarTareasCompletadas(String correo) {
         Usuario usuario = buscarUsuario(correo);
 
         int tareasCompletadas = 0;
 
-        for(Materia materia : usuario.getListaMaterias()) {
-            for(Tarea tarea : materia.getColaTareas().getElementos()) {
+        for (Materia materia : usuario.getListaMaterias()) {
+            for (Tarea tarea : materia.getColaTareas().getElementos()) {
                 if (tarea.getEstadoTarea() == EstadoTarea.COMPLETADA) {
-                    tareasCompletadas ++;
+                    tareasCompletadas++;
                 }
             }
         }
         return tareasCompletadas;
     }
 
-
     public int contarTareasProximas(String correo) {
         Usuario usuario = buscarUsuario(correo);
         int tareasProximas = 0;
-    
+
         if (usuario != null) {
             for (Materia materia : usuario.getListaMaterias()) {
                 for (Tarea tarea : materia.getColaTareas().getElementos()) {
                     if (tarea.getEstadoTarea() == EstadoTarea.PENDIENTE) {
                         long diasRestantes = java.time.temporal.ChronoUnit.DAYS.between(
-                            java.time.LocalDate.now(), tarea.getFechaEntrega()
-                        );
-    
+                                java.time.LocalDate.now(), tarea.getFechaEntrega());
+
                         if (diasRestantes <= 5) { // Alta o Media prioridad
                             tareasProximas++;
                         }
@@ -212,8 +210,65 @@ public class TaskScholar {
                 }
             }
         }
-    
+
         return tareasProximas;
     }
+
+    public boolean eliminarMateria(Materia materiaSeleccionada, String correo) {
+        Usuario usuario = buscarUsuario(correo);
+
+        Iterator<Materia> iterator = usuario.getListaMaterias().iterator();
+
+        while (iterator.hasNext()) {
+            Materia materia = iterator.next();
+            if (materia.equals(materiaSeleccionada)) {
+                iterator.remove(); 
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+
+    public boolean actualizarTarea(Tarea tareaActual, Tarea tareaEditada, String correo) {
+        Usuario usuario = buscarUsuario(correo);
+        if (usuario == null) return false;
     
+        for (Materia materia : usuario.getListaMaterias()) {
+            ColaPrioridad<Tarea> cola = materia.getColaTareas();
+    
+            // Buscar la tarea actual en la cola
+            for (Tarea tarea : cola.getElementos()) {
+                if (tarea.getTitulo().equals(tareaActual.getTitulo())) {
+    
+                    EstadoTarea estadoAnterior = tarea.getEstadoTarea();
+                    EstadoTarea nuevoEstado = tareaEditada.getEstadoTarea();
+    
+                    // Actualizar la tarea con los nuevos valores
+                    tarea.setTitulo(tareaEditada.getTitulo());
+                    tarea.setDescripción(tareaEditada.getDescripción());
+                    tarea.setFechaEntrega(tareaEditada.getFechaEntrega());
+                    tarea.setEstadoTarea(nuevoEstado);
+    
+                    // Si el estado cambió de PENDIENTE a COMPLETADA
+                    if (estadoAnterior == EstadoTarea.PENDIENTE && nuevoEstado == EstadoTarea.COMPLETADA) {
+                        materia.setTareasPendientes(materia.getTareasPendientes() - 1);
+                    }
+    
+                    // Si el estado cambió de COMPLETADA a PENDIENTE
+                    if (estadoAnterior == EstadoTarea.COMPLETADA && nuevoEstado == EstadoTarea.PENDIENTE) {
+                        materia.setTareasPendientes(materia.getTareasPendientes() + 1);
+                    }
+    
+                    return true; // Tarea actualizada correctamente
+                }
+            }
+        }
+    
+        return false; // No se encontró la tarea
+    }
+    
+
 }

@@ -25,13 +25,15 @@ public class TaskSchoolUtils {
             materia1,
             "Mapa conceptual de colas", 
             "Mapa conceptual", 
-            LocalDate.of(2025, 4, 20));
+            LocalDate.of(2025, 4, 20),
+            EstadoTarea.PENDIENTE);
         
         Tarea tarea2 = new Tarea(
             materia1, 
             "Realizar aplicación con javaFX", 
             "Aplicación fx", 
-            LocalDate.of(2025, 4, 18));
+            LocalDate.of(2025, 4, 18),
+            EstadoTarea.COMPLETADA);
         
         materia1.agregarTarea(tarea1); // Agrega la tarea a la cola
         materia1.agregarTarea(tarea2);
@@ -48,7 +50,8 @@ public class TaskSchoolUtils {
             materia2, 
             "Realizar un laboratorio sobre linux", 
             "Laboratorio 10", 
-            LocalDate.of(2025, 4, 17));
+            LocalDate.of(2025, 4, 17),
+            EstadoTarea.PENDIENTE);
 
         materia2.agregarTarea(tarea3);
 

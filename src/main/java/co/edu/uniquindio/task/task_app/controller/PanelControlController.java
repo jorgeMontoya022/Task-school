@@ -27,5 +27,9 @@ public class PanelControlController extends CoreController{
     public int contarTareasProximas(String correo) {
        return ModelFactory.contarTareasProximas(correo);
     }
+
+    public boolean actualizarTarea(Tarea tareaSeleccionada, Tarea tarea, String correo) {
+       return ModelFactory.actualizarTarea(tareaSeleccionada, tarea, correo);
+    }
     
 }

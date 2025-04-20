@@ -80,6 +80,15 @@ public class ModelFactory {
     public int contarTareasProximas(String correo) {
        return taskScholar.contarTareasProximas(correo);
     }
+
+    public boolean eliminarMateria(Materia materiaSeleccionada, String correo) {
+        return taskScholar.eliminarMateria(materiaSeleccionada, correo);
+       
+    }
+
+    public boolean actualizarTarea(Tarea tareaSeleccionada, Tarea tarea, String correo) {
+        return taskScholar.actualizarTarea(tareaSeleccionada, tarea, correo);
+    }
     
 
     

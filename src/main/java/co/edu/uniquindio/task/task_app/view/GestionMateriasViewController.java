@@ -83,11 +83,6 @@ public class GestionMateriasViewController extends CoreViewController implements
 
   }
 
-  private void eliminarMateria() {
-    mostrarMensaje("Funcionalidad no disponible", "Aviso", "¡Ups! Esta funcionalidad todavía no está lista. Pronto estará disponible.", Alert.AlertType.INFORMATION);
-
-  }
-
   @FXML
   void onLimpiar(ActionEvent event) {
     limpiarCampos();
@@ -174,8 +169,30 @@ public class GestionMateriasViewController extends CoreViewController implements
 
       } else {
         mostrarMensaje("Error", "Materia no agregada", "La materia no pudo ser agregada", Alert.AlertType.ERROR);
-        
+
       }
+    }
+
+  }
+
+  private void eliminarMateria() {
+    if(materiaSeleccionada != null) {
+      if(mostrarMensajeConfirmacion("¿Está seguro de eliminar la materia seleccionada?")) {
+        if(gestionMateriasController.eliminarMateria(materiaSeleccionada, usuario.getCorreo())) {
+          listaMaterias.remove(materiaSeleccionada);
+          ObserverManagement.getInstance().notifyObservers(EventType.MATERIA);
+          deseleccionar();
+          limpiarCampos();
+          mostrarMensaje("Notificación", "Materia eliminada", 
+          "La materia ha sido eliminada con éxito", Alert.AlertType.INFORMATION);
+        }else {
+          mostrarMensaje("Error", "Materia no eliminada", 
+          "La materia no pudo ser eliminada", Alert.AlertType.ERROR);
+        }
+      }
+    } else {
+      mostrarMensaje("Advertencia", "Materia no seleccionada", 
+      "Por favor, seleccione una materia para eliminar", Alert.AlertType.WARNING);
     }
 
   }
@@ -193,8 +210,8 @@ public class GestionMateriasViewController extends CoreViewController implements
       mensaje += "El nombre del profesor es requerido.\n";
     }
 
-    if(gestionMateriasController.verificarMateria(materia.getNombreMateria(), usuario.getCorreo())){
-      mensaje +="Ya tienes esta materia";
+    if (gestionMateriasController.verificarMateria(materia.getNombreMateria(), usuario.getCorreo())) {
+      mensaje += "Ya tienes esta materia";
     }
 
     if (!mensaje.isEmpty()) {
@@ -214,11 +231,11 @@ public class GestionMateriasViewController extends CoreViewController implements
 
   @Override
   public void updateView(EventType eventType) {
-    if(eventType == EventType.TAREA) {
+    if (eventType == EventType.TAREA) {
       getMaterias();
       tableMaterias.refresh();
     }
-   
+
   }
 
 }
