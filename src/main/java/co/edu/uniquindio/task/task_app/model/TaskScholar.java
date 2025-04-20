@@ -269,6 +269,43 @@ public class TaskScholar {
     
         return false; // No se encontró la tarea
     }
+
+    public boolean eliminarTarea(Tarea tarea, String correo) {
+        Usuario usuario = buscarUsuario(correo);
+        if (usuario == null) return false;
+    
+        for (Materia materia : usuario.getListaMaterias()) {
+            List<Tarea> tareas = materia.getColaTareas().getElementos();
+            
+            // Buscar la tarea por título
+            for (int i = 0; i < tareas.size(); i++) {
+                Tarea t = tareas.get(i);
+                if (t.getTitulo().equals(tarea.getTitulo())) {
+                    // Cuando la encuentre, recrear la cola sin esa tarea
+                    ColaPrioridad<Tarea> nuevaCola = new ColaPrioridad<>(materia.getColaTareas().getComparator());
+                    
+                    for (Tarea actual : tareas) {
+                        // Añadimos todas las tareas excepto la que queremos eliminar
+                        if (!actual.getTitulo().equals(tarea.getTitulo())) {
+                            nuevaCola.add(actual);
+                        }
+                    }
+                    
+                    // Actualizar el contador si era pendiente
+                    if (t.getEstadoTarea() == EstadoTarea.PENDIENTE) {
+                        materia.setTareasPendientes(materia.getTareasPendientes() - 1);
+                    }
+                    
+                    // Reemplazar la cola con la nueva (sin la tarea eliminada)
+                    materia.setColaTareas(nuevaCola);
+                    
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
     
 
 }

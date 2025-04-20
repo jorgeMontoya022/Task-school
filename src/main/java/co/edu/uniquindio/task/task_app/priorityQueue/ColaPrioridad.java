@@ -27,7 +27,17 @@ public class ColaPrioridad<T> {
      */
     public ColaPrioridad(Comparator<T> comparator) {
         this.heap = new ArrayList<>();
+        this.setComparator(comparator);
+    }
+
+    public Comparator<T> getComparator() {
+        return comparator;
+        
+    }
+
+    public void setComparator(Comparator<T> comparator) {
         this.comparator = comparator;
+        
     }
 
     /**
@@ -108,7 +118,7 @@ public class ColaPrioridad<T> {
             int parent = (index - 1) / 2;
 
             // Si el elemento actual tiene mayor prioridad, termina
-            if (comparator.compare(heap.get(index), heap.get(parent)) >= 0) {
+            if (getComparator().compare(heap.get(index), heap.get(parent)) >= 0) {
                 break;
             }
 
@@ -132,12 +142,12 @@ public class ColaPrioridad<T> {
             int smallest = index;
 
             // Compara con el hijo izquierdo
-            if (leftChild < size && comparator.compare(heap.get(leftChild), heap.get(smallest)) < 0) {
+            if (leftChild < size && getComparator().compare(heap.get(leftChild), heap.get(smallest)) < 0) {
                 smallest = leftChild;
             }
 
             // Compara con el hijo derecho
-            if (rightChild < size && comparator.compare(heap.get(rightChild), heap.get(smallest)) < 0) {
+            if (rightChild < size && getComparator().compare(heap.get(rightChild), heap.get(smallest)) < 0) {
                 smallest = rightChild;
             }
 
@@ -183,7 +193,7 @@ public class ColaPrioridad<T> {
         }
         
         // Crear una copia de la cola
-        ColaPrioridad<T> colaTemp = new ColaPrioridad<>(this.comparator);
+        ColaPrioridad<T> colaTemp = new ColaPrioridad<>(this.getComparator());
         
         // Extraer todos los elementos
         T elemento;

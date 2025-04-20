@@ -35,5 +35,9 @@ public class PanelControlController extends CoreController{
     public int contarTareasCompletadas(String correo) {
         return ModelFactory.contarTareasCompletadas(correo);
     }
+
+    public boolean eliminarTarea(Tarea tareaSeleccionada, String correo) {
+       return ModelFactory.eliminarTarea(tareaSeleccionada, correo);
+    }
     
 }

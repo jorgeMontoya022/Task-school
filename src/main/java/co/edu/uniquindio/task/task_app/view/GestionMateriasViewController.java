@@ -177,7 +177,7 @@ public class GestionMateriasViewController extends CoreViewController implements
 
   private void eliminarMateria() {
     if(materiaSeleccionada != null) {
-      if(mostrarMensajeConfirmacion("¿Está seguro de eliminar la materia seleccionada?")) {
+      if(mostrarMensajeConfirmacion("¿Está seguro de eliminar la materia '"+materiaSeleccionada.getNombreMateria()+"' ?")) {
         if(gestionMateriasController.eliminarMateria(materiaSeleccionada, usuario.getCorreo())) {
           listaMaterias.remove(materiaSeleccionada);
           ObserverManagement.getInstance().notifyObservers(EventType.MATERIA);

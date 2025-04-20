@@ -139,12 +139,6 @@ public class PanelControlViewController extends CoreViewController implements Ob
 
     }
 
-    private void eliminarTarea() {
-        mostrarMensaje("Funcionalidad no disponible", "Aviso",
-                "¡Ups! Esta funcionalidad todavía no está lista. Pronto estará disponible.",
-                Alert.AlertType.INFORMATION);
-    }
-
     @FXML
     void onActualizarTarea(ActionEvent event) {
         actualizarTarea();
@@ -273,15 +267,16 @@ public class PanelControlViewController extends CoreViewController implements Ob
     private ObservableList<Tarea> filterList(List<Tarea> originalList, String newValue) {
         List<Tarea> filteredList = new ArrayList<>();
         for (Tarea tarea : originalList) {
-            if(encontrarTarea(tarea, newValue)) filteredList.add(tarea);
+            if (encontrarTarea(tarea, newValue))
+                filteredList.add(tarea);
 
         }
         return FXCollections.observableList(filteredList);
     }
 
     private boolean encontrarTarea(Tarea tarea, String newValue) {
-        return(tarea.getMateria().getNombreMateria().toLowerCase().contains(newValue.toLowerCase()) || 
-        tarea.getTitulo().toLowerCase().contains(newValue.toLowerCase()));
+        return (tarea.getMateria().getNombreMateria().toLowerCase().contains(newValue.toLowerCase()) ||
+                tarea.getTitulo().toLowerCase().contains(newValue.toLowerCase()));
     }
 
     private void initializeDataComboBox() {
@@ -398,6 +393,29 @@ public class PanelControlViewController extends CoreViewController implements Ob
         } else {
             mostrarMensaje("Advertencia", "Tarea no seleccionada",
                     "Por favor selecciones una tarea que desea actualizar", Alert.AlertType.WARNING);
+        }
+    }
+
+    private void eliminarTarea() {
+        if (tareaSeleccionada != null) {
+            if (mostrarMensajeConfirmacion("¿Estás seguro de eliminar la tarea '"+tareaSeleccionada.getTitulo()+"' ?")) {
+                if (panelControlController.eliminarTarea(tareaSeleccionada, usuario.getCorreo())) {
+                    limpiarCampos();
+                    getTareas();
+                    mostrarEntregas();
+                    ObserverManagement.getInstance().notifyObservers(EventType.TAREA);
+                    tablaTareas.refresh();
+                    mostrarMensaje("Notificación", "Tarea eliminada",
+                            "La tarea fue eliminada con éxito", Alert.AlertType.INFORMATION);
+
+                } else {
+                    mostrarMensaje("Error", "Tarea no eliminada",
+                            "La tarea no pudo ser eliminada", Alert.AlertType.ERROR);
+                }
+            }
+        } else {
+            mostrarMensaje("Advertencia", "Tarea no seleccionada",
+                    "Por favor, seleccionada una tarea que deseas eliminar", Alert.AlertType.WARNING);
         }
     }
 

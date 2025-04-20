@@ -93,6 +93,10 @@ public class ModelFactory {
     public int contarTareasCompletadas(String correo) {
        return taskScholar.contarTareasCompletadas(correo);
     }
+
+    public boolean eliminarTarea(Tarea tareaSeleccionada, String correo) {
+        return taskScholar.eliminarTarea(tareaSeleccionada, correo);
+    }
     
 
     
