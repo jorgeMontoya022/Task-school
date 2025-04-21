@@ -90,12 +90,12 @@
                                 </rowConstraints>
                                 
                                 <!-- Universidad -->
-                                <Label text="Universidad" textFill="#718096" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                <Label text="Institución" textFill="#718096" GridPane.columnIndex="0" GridPane.rowIndex="0">
                                     <font>
                                         <Font size="14" />
                                     </font>
                                 </Label>
-                                <TextField fx:id="universidadField" prefHeight="40" promptText="Universidad" style="-fx-background-color: #f8fafc;                                                    -fx-border-color: #e0e6ed;                                                    -fx-border-width: 1;                                                    -fx-border-radius: 5;                                                    -fx-background-radius: 5;" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                <TextField fx:id="universidadField" prefHeight="40" promptText="Institución" style="-fx-background-color: #f8fafc;                                                    -fx-border-color: #e0e6ed;                                                    -fx-border-width: 1;                                                    -fx-border-radius: 5;                                                    -fx-background-radius: 5;" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                                 
                                 <!-- Carrera -->
                                 <Label text="Carrera" textFill="#718096" GridPane.columnIndex="1" GridPane.rowIndex="0">
